@@ -1,0 +1,57 @@
+﻿@{
+    var db = Database.Open("Datebase");
+
+    var dbstring = "SELECT * FROM Settings WHERE Id = @0";
+    var dlang = db.QuerySingle(dbstring, "1"); //geting Site Lang
+    var dname = db.QuerySingle(dbstring, "2"); //geting Site Name
+    var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
+    var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
+
+    if(IsPost){
+        var sitename = Request["sitename"];
+        if(sitename == null){
+        
+        }
+        var sitelang = Request["sitelang"];
+        if(sitelang == null){
+        
+        }
+        var pagesepr = Request["pagesepr"];
+        if(pagesepr == null){
+        
+        }
+        var sitemeta = Request["sitemeta"];
+        if(sitemeta == null){
+            sitemeta = "false";
+        }
+        sitemeta = "true";
+
+
+
+    }
+    
+}
+<form action="@Request.Url" method="post">
+    <ol>
+        <li>
+            <label for="sitename">Название сайта</label>
+            <input type="text" name="sitename" value="@dname.SetValue"/>
+        </li>
+        <li>
+            <label for="sitelang">Язык сайта</label>
+            <input type="text" name="sitelang" value="@dlang.SetValue"/>
+           
+        </li>
+        <li>
+            <label for="pagesepr">@dps.SetDescr</label>
+            <input type="text" name="pagesepr" value="@dps.SetValue"/>
+        </li>
+        <li>
+            <label for="sitemeta">@dmeta.SetDescr</label>
+            <input type="checkbox" checked="checked" name="sitemeta"/>
+        </li>
+        <li>
+        <input type="submit"/>
+        </li>
+    </ol>
+</form>
