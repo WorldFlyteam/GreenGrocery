@@ -1,12 +1,110 @@
 ﻿@{
     var pageId = Request["Id"];
+     var errorm = "";
+    var db = Database.Open("Datebase");
+
+    var data = db.QuerySingle("SELECT * FROM Pages WHERE Id = @0", pageId);
+
+    var today = DateTime.Now;
+    var MasterPage = data.Layout;
+    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/Components/Layouts"));
+    FileInfo[] fileInfo = dirInfo.GetFiles("_*.cshtml", SearchOption.TopDirectoryOnly  );
+
+
+    if(IsPost){
+        var pagetitle = Request["pagetitle"];
+        if(pagetitle == null){
+            //errorm = "Название пустое";
+        }
+
+
+        var pageurl = Request["pageurl"];
+        if(pageurl == null){
+            //errorm = + "Адрес пустой";
+        }
+
+        var pagedescr = Request["pagedescr"];
+        if(pagedescr == null){
+            //errorm = + "Описание пустое";
+        }
+
+        var pageauthtor = Request["pageauthtor"];
+        if(pageauthtor == null){
+            //errorm = + "Автора нет";
+        }
+
+        
+        var pagecontent = Request.Unvalidated("pagecontent"); // Validation bypassed
+        if(pagecontent == null){
+            //errorm = + "Контента нет";
+        }
+
+        var pagelayout = Request["pagelayout"];
+        if(pagelayout == null){
+            //errorm = + "Описания нет";
+        }
+
+        
+
+        try{
+            db.Execute("UPDATE Pages SET Name=@0, Content=@1, Date=@2, Url=@3, Layout=@4, Description=@5, Author=@6 WHERE Id=@7 ", pagetitle, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthtor, pageId);
+        Response.Redirect("~/Components/Control/PageEdit?id=" + pageId);
+        } catch (Exception ex){
+            errorm = ex.Message.ToString();
+        }
+    }
 
 }
 
-
+@errorm
 <form action="@Request.Url" method="post">
-      <textarea name="content" style="width:100%;"></textarea>
+    <ol>
+        <li>
+            <label for="pagetitle">Название сраницы</label>
+            <input type="text" name="pagetitle" value="@data.Name"/>
+        </li>
+        <li>
+            <label for="pageurl">Адрес сраницы</label>
+            
+            @Request.Url.Scheme://@Request.Url.Authority/<input type="text" name="pageurl" value="@data.Url"/>
+        </li>
+        <li>
+            <label for="pagedescr">Описание сраницы</label>
+            <input type="text" name="pagedescr" value="@data.Description"/>
+        </li>
+         <li>
+            <label for="pageauthtor">Автор сраницы</label>
+            <input type="text" name="pageauthtor" value="@data.Author"/>
+        </li>
+         <li>
+            <label for="pagelayout">Макет сраницы</label>
+            <select  name="pagelayout">
+                @foreach (var f in fileInfo)
+               {
+                <option value="@Functions.CleanRCNames(f.Name)" @if (MasterPage == f.Name)
+                                        {<text>selected="selected"</text>}>@Functions.CleanRCNames(f.Name)</option>
+               }
+            </select>
+        </li>
+        <li>
+            <label for="pagecontent">Содежимое страницы</label>
+            <textarea name="pagecontent" style="width:100%;">@data.Content</textarea>
+        </li>
+        <li>
+            <input type="submit" value="Сохранить"/>
+        </li>
+    </ol>
+
+
+      
+
+    
 </form>
+
+
+
+
+
 
 <script type="text/javascript" src="~/components/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
