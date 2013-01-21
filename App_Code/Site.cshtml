@@ -1,0 +1,14 @@
+﻿@helper SiteMenu() {
+    var db = Database.Open("Datebase");
+    var data = db.Query("select * from SiteMenu order by OrderId DESC");
+   <ul>
+    @foreach (var row in data)
+    {
+        if(row.Link.ToString().StartsWith("~")){
+       <li><a href="@Href(row.Link)" target="@row.Target">@row.Label</a></li>
+        }else{
+        <li><a href="@row.Link" target="@row.Target">@row.Label</a></li>
+        }
+    }
+    </ul>
+}

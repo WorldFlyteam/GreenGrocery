@@ -19,6 +19,7 @@
 
 
     if(IsPost){
+        AntiForgery.Validate();
         var sitename = Request["sitename"];
         if(sitename == null){
             
@@ -53,6 +54,8 @@
     
 }
 <form action="@Request.Url" method="post">
+    @AntiForgery.GetHtml()
+   
     <ol>
         <li>
             <label for="sitename">Название сайта</label>

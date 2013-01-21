@@ -1,0 +1,42 @@
+﻿@{
+    var error = UrlData[0].AsInt();
+
+    if(error == 404){
+        Page.Title = "404 Not Found";
+        Page.Description = "Запрошеная страница не найдена";
+    }
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@Page.Title</title>
+        <style>
+            body{
+                font-family:Verdana, sans-serif;
+            }
+            .page {
+                
+                width: 100%;
+            }
+            .t-no{
+                font-size: 200px;
+                font-family: 'Segoe UI Light', sans-serif;
+                font-weight: 200;
+                text-align: center;
+                white-space: nowrap;
+            }
+        </style>
+    </head>
+    <body><div class="page">
+        <p style="text-align: center;">
+        <span class="t-no">
+        No :(
+        </span></p>
+        @Page.Description
+        </div>
+    </body>
+</html>
