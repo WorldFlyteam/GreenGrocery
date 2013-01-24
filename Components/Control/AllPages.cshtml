@@ -1,4 +1,6 @@
 ﻿@{
+    Page.Title = "Все страницы сайта";    
+
     var db = Database.Open("Datebase");
 
     var data = db.Query("Select Id, Name, Date from Pages order by Date DESC");
@@ -6,7 +8,7 @@
     var grid = new WebGrid(source: data,
                             rowsPerPage: 20);
 }
-
+<p>Все доступные страницы</p>
         @grid.GetHtml(
                 tableStyle: "Grid",
                 headerStyle: "head",
@@ -14,11 +16,11 @@
                 footerStyle: "pgr",
                 columns: grid.Columns(
                     grid.Column(format: @<a href="PageEdit?id=@item.Id" title="Edit Page" ><img
-                        src="images/edit_page.gif" alt="Edit" class="rcGC" /></a>),
+                        src="/components/ui/images/control/edit_page.gif" alt="Edit" class="GC" /></a>),
                     
-                    grid.Column("Name", "Page Name", style: "rcGB"),
+                    grid.Column("Name", "Page Name", style: "GB"),
                     grid.Column("Last Edited", format: @<i>@item.Date</i>),
                     grid.Column(format: @<a href="AllPages.cshtml?id=@item.Id" title="Delete" onclick="return confirm('Are you sure you want to delete ?')"><img
-                        src="images/delete.gif" alt="Delete" class="rcGC" /></a>)
+                        src="/components/ui/images/control/_delete.gif" alt="Delete" class="GC" /></a>)
                 )
             )

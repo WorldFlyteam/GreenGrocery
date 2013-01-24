@@ -1,9 +1,11 @@
 ﻿@{
+    
+Page.Title = "Меню сайта";    
 var errorm = "";
 var IsValid = true;
-var linklabelvalid = "";
-var pagelinkvalid = "";
-var targetvalid = "";
+var linklabelvalid = false;
+var pagelinkvalid = false;
+
 
     
 
@@ -29,13 +31,13 @@ var targetvalid = "";
         AntiForgery.Validate();
     var linklabel = Request["linklabel"];
     if(linklabel.IsEmpty()){
-        linklabelvalid = "Название ссылки не может быть пустым";
+        linklabelvalid = true;
         IsValid = false;
     }
 
     var pagelink = Request["pagelink"];
     if(linklabel.IsEmpty()){
-        pagelinkvalid = "Ссылка должна куда-то вести";
+        pagelinkvalid = true;
         IsValid = false;
     }
     
@@ -66,13 +68,20 @@ var targetvalid = "";
     
 }
 @errorm
+<h2>Добавление пункта меню</h2>
 <form action="@Request.Url"  method="post">
     @AntiForgery.GetHtml()
     <ol>
         <li>
-            <label for="linklabel">Название пункта меню</label>
+            <label for="linklabel">Название пункта меню*</label>
             <input type="text" name="linklabel" value=""/>
-            @linklabelvalid
+            @if(linklabelvalid){
+                <text>
+                    <span class="form-error">
+                        Текст ссылки не может быть пустым
+                    </span>
+                </text>
+            }
         </li>
        @* <li >
                 <label for="pagelink">Select Page:</label>
@@ -85,9 +94,16 @@ var targetvalid = "";
                  </select>
              </li>*@
              <li >
-                <label for="pagelink">or enter URL:</label>
+                <label for="pagelink">Адрес ссылки*</label>
                 <input type="text" name="pagelink" value="" maxlength="250" />
-                 @pagelinkvalid
+                 
+                 @if(pagelinkvalid){
+                <text>
+                    <span class="form-error">
+                        Ссылка должна куда-то вести
+                    </span>
+                </text>
+            }
              </li>
         <li >
                 <label for="Target">Target:</label>
@@ -107,18 +123,18 @@ var targetvalid = "";
     </ol>
 </form>
 
-
+<h2>Доступные пункты меню</h2>
 @grid.GetHtml(tableStyle: "Grid",
                 headerStyle: "head",
                 alternatingRowStyle: "alt", 
                 columns:grid.Columns(
-                    grid.Column("Label", "Label", style: "rcGB"), 
+                    grid.Column("Label", "Label", style: "GB"), 
                     grid.Column("Link", format:@<i>@item.Link</i>),
-                    grid.Column("Order",format:@<span class="rcGB"><a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=1&id=@item.Id"><img
-                        src="images/up.gif" alt="up" class="rcGC"/></a>
-                    <a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=-1&id=@item.Id"><img src="images/down.gif" alt="down" class="rcGC" style="margin-right:10px" /></a>@item.OrderId</span>),
+                    grid.Column("Order",format:@<span class="GB"><a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=1&id=@item.Id"><img
+                        src="/components/ui/images/control/up.gif" alt="up" class="GC"/></a>
+                    <a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=-1&id=@item.Id"><img src="/components/ui/images/control/down.gif" alt="down" class="rcGC" style="margin-right:10px" /></a>@item.OrderId</span>),
                     grid.Column("Target", "Target"),
                     grid.Column(format:@<a href="SiteMenu.cshtml?deletemenuitem=true&itemid=@item.Id" onclick="return confirm('Are you sure you want to delete ?')" title="Delete"><img
-                        src="images/delete.gif" class="rcGC" alt="Delete" /></a>)
+                        src="/components/ui/images/control/delete.gif" class="GC" alt="Delete" /></a>)
                                     )
                             )

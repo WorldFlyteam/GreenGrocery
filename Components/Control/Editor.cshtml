@@ -85,6 +85,7 @@
 <fieldset>
    <legend>File content (edit ONLY if you know what you are doing:)</legend>
     <form name="fileEdit"   method="post" action="">
+        @AntiForgery.GetHtml()
     <textarea name="fileContent" rows="30" cols="90">@fileContent</textarea>
               <p class="form-actions">
             <input type="submit" value="Update" title="Update" />

@@ -1,6 +1,14 @@
 ﻿@{
+Page.Title = "Новая страница";        
+
 var errMSG = "";
-var redirect = false;
+var IsValid = true;
+var pagenameerror = "";
+var pageurlerror = "";
+var pagelayouterror = "";
+var pagecontenterror = "";
+
+
 var db = Database.Open("Datebase");
 
 
@@ -9,24 +17,42 @@ var db = Database.Open("Datebase");
 
     if(IsPost){
         var pagename = Request["pagename"];
+        if(pagename.IsEmpty()){
+            pagenameerror = "Заполните название страницы";
+            IsValid = false;
+        }
         
         var pageurl = Request["pageurl"];
+        if(pageurl.IsEmpty()){
+            pageurlerror = "У страницы должен быть адрес";
+            IsValid = false;
+        }
 
         var pagedescr = Request["pagedescr"];
+        
 
         var pageauthor = Request["pageauthor"];
+        
 
         var pagelayout = Request["pagelayout"];
+        if(pagelayout.IsEmpty()){
+            pagelayouterror = "Выбирете макет страницы";
+            IsValid = false;
+        }
 
         var pagecontent = Request.Unvalidated("pagecontent");
+        if(pagecontent.IsEmpty()){
+            pagecontenterror = "Заполните контент сстраницы";
+            IsValid = false;
+        }
 
         var today = DateTime.Now;
-        
+        if(IsValid){
         try
              {
                  db.Execute("INSERT into Pages (Name, Content, Date, Url, Layout, Description, Author) values (@0, @1, @2, @3, @4, @5, @6)", pagename, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthor);
-                 //Response.Redirect("Editpage.cshtml?id=" + db.GetLastInsertId());
-                 redirect = true;
+                
+                 Response.Redirect("~/Components/Control/PageEdit?id=" + db.GetLastInsertId());
              }
              catch (Exception ex)
              {
@@ -35,10 +61,9 @@ var db = Database.Open("Datebase");
              }
 
     }
+    }
 }
-@if(redirect == true){
-    
-}
+
 
 @errMSG
 <form action="@Request.Url" method="post">
@@ -46,10 +71,12 @@ var db = Database.Open("Datebase");
         <li>
             <label for="pagename">Название страницы</label>
             <input type="text" name="pagename" value=""/>
+            @pagenameerror
         </li>
         <li>
             <label for="pageurl">Адрес страницы</label>
             <input type="text" name="pageurl" value=""/>
+            @pageurlerror
         </li>
         <li>
             <label for="c">Описание страницы</label>
@@ -67,9 +94,11 @@ var db = Database.Open("Datebase");
                 <option value="@Functions.CleanRCNames(f.Name)" >@Functions.CleanRCNames(f.Name)</option>
                }
             </select>
+            @pagelayouterror
         </li>
         <li>
             <label for="pagecontent">Содежимое страницы</label>
+            @pagecontenterror
             <textarea name="pagecontent" style="width:100%;"></textarea>
         </li>
         <li>

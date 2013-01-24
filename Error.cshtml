@@ -1,9 +1,17 @@
 ﻿@{
     var error = UrlData[0].AsInt();
 
+    if(error == 403){
+        Page.Title = "404 Not Found";
+        Page.Description = "Вы не имеете доступа к указанному ресурсу";
+    }
     if(error == 404){
         Page.Title = "404 Not Found";
         Page.Description = "Запрошеная страница не найдена";
+    }
+    if(error == 500){
+        Page.Title = "404 Not Found";
+        Page.Description = "Мы столкнулись с критической ошибкой.";
     }
 }
 
@@ -29,14 +37,21 @@
                 text-align: center;
                 white-space: nowrap;
             }
+            .t-desc{
+                font-size: 40px;
+                font-family: 'Segoe UI Light', sans-serif;
+                font-weight: 200;
+            }
         </style>
     </head>
     <body><div class="page">
         <p style="text-align: center;">
         <span class="t-no">
         No :(
-        </span></p>
-        @Page.Description
+        </span><br/>
+        <span class="t-desc">@Page.Description</span>
+        </p>
+        
         </div>
     </body>
 </html>

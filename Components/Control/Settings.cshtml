@@ -11,7 +11,7 @@
     var dname = db.QuerySingle(dbstring, "2"); //geting Site Name
     var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
     var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
-    if(dmeta.SetValue == "true"){
+    if(dmeta.SetValue == "on"){
         dmetavalue = " checked=\"checked\" ";
     } else {
         dmetavalue = "";
@@ -33,10 +33,10 @@
             
         }
         var sitemeta = Request["sitemeta"];
-        if(sitemeta == null){
+        /*if(sitemeta == null){
             sitemeta = "false";
         }
-        sitemeta = "true";
+        sitemeta = "true";*/
 
         try{
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitename, 2);
@@ -53,6 +53,7 @@
     }
     
 }
+@errorm
 <form action="@Request.Url" method="post">
     @AntiForgery.GetHtml()
    
@@ -72,7 +73,7 @@
         </li>
         <li>
             <label for="sitemeta">@dmeta.SetDescr</label>
-            <input disabled="disabled" type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
+            <input  type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
         </li>
         <li>
         <input type="submit" value="Сохранить"/>
