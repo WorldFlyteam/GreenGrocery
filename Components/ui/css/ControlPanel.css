@@ -119,6 +119,9 @@ padding: .4em 0;
 
 
 /* Pages */
+form ol{
+    margin-left: -30px; 
+}
 form ol, form ol li{
     list-style: none;
 }

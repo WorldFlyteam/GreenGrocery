@@ -58,8 +58,7 @@
 </script>
 <form name="selectLayout" id="selectLayout" method="get" action="">
     @AntiForgery.GetHtml()
- <fieldset>
-        <legend>Select layout</legend>
+
         @errMSG
         <ol>
             <li>
@@ -79,11 +78,10 @@
                 }
             </li>
         </ol>
-</fieldset>
+
     </form>
 
-<fieldset>
-   <legend>File content (edit ONLY if you know what you are doing:)</legend>
+
     <form name="fileEdit"   method="post" action="">
         @AntiForgery.GetHtml()
     <textarea name="fileContent" rows="30" cols="90">@fileContent</textarea>
@@ -91,4 +89,3 @@
             <input type="submit" value="Update" title="Update" />
         </p>
      </form>
-</fieldset>
