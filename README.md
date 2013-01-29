@@ -1,2 +1,2 @@
-InternalCMS
+Ceres Project
 ===========
