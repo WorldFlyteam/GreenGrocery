@@ -11,6 +11,8 @@
     var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
 
     var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
+
+    var ddkeyw = db.QuerySingle(dbstring, "6"); //geting Site Keywords
 }
 
 <!DOCTYPE html>
@@ -24,7 +26,7 @@
 
         @if(dmeta.SetValue == "on"){
         <meta name="description" content="@Page.Description"/>
-        <meta name="keywords" content="@Page.Keywords"/>
+        <meta name="keywords" content="@Page.Keywords, @ddkeyw.SetValue"/>
         <meta name="author" content="@Page.Author"/>
         }
 

@@ -36,7 +36,9 @@ padding: .4em 0;
 }
 
 .app a{
-    background: url(/components/ui/images/worldflyproject.png) no-repeat;
+    /*background: url(/components/ui/images/worldflyproject.png) no-repeat;*/
+    
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHdpZHRoPSI0NiIgaGVpZ2h0PSI2NyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8IS0tIENyZWF0ZWQgd2l0aCBTVkctZWRpdCAtIGh0dHA6Ly9zdmctZWRpdC5nb29nbGVjb2RlLmNvbS8gLS0+CiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcvPgogIDx0ZXh0IHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEuMDQ1ODU3MzE1Nzk2MzU0MiwwLC00LjExMDE3NDUwMDk3NDE4NTUpICIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIHN0cm9rZS13aWR0aD0iMCIgc3Ryb2tlPSIjMDAwMDAwIiBmaWxsPSIjZmZmZmZmIiBpZD0ic3ZnXzEiIHk9IjUwLjE5NDY4IiB4PSIyMiI+JiMxNjk7PC90ZXh0PgogPC9nPgo8L3N2Zz4=) no-repeat;
     display: block;
     height: 60px;
     margin: -17px 0 0 14px;
@@ -76,6 +78,7 @@ padding: .4em 0;
     margin-left: -240px;
     width: 100%;
     padding: 0 0 70px 0;
+    min-width: 400px;
 }
 
 .main{
@@ -85,9 +88,11 @@ padding: .4em 0;
 
 .bottom{
     clear: both;
-    height: 70px;
-    margin-top: -70px;
-    background: url(/components/ui/images/ceres.png) no-repeat bottom left;
+    height: 78px;
+    
+    margin: -70px 0 0 0;
+    width: 100%;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHdpZHRoPSIxMzQiIGhlaWdodD0iODQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPCEtLSBDcmVhdGVkIHdpdGggU1ZHLWVkaXQgLSBodHRwOi8vc3ZnLWVkaXQuZ29vZ2xlY29kZS5jb20vIC0tPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDx0ZXh0IHhtbDpzcGFjZT0icHJlc2VydmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJTYW5zLXNlcmlmIiBmb250LXNpemU9Ijc2IiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZT0iIzAwMDAwMCIgZmlsbD0iI2ZmZmZmZiIgaWQ9InN2Z18xIiB5PSI2OCIgeD0iMjgiPiYjMTY5OzwvdGV4dD4KICA8dGV4dCB4bWw6c3BhY2U9InByZXNlcnZlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iU2Fucy1zZXJpZiIgZm9udC1zaXplPSIzOSIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2U9IiMwMDAwMDAiIGZpbGw9IiNmZmZmZmYiIGlkPSJzdmdfMiIgeT0iNTIiIHg9Ijk2Ij5lcmVzPC90ZXh0PgogPC9nPgo8L3N2Zz4=) no-repeat bottom left;
 }
 
 .copyright{
@@ -96,6 +101,7 @@ padding: .4em 0;
     top: 36px;
     right: 16px;
 }
+
 
 .menu-admin{
     list-style: none;
@@ -127,28 +133,61 @@ form ol, form ol li{
 }
 
 form ol li{
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 form ol li label {
-    display: block;
+    padding-bottom: 5px;
     font-size: 1.3em;
 }
 
 form ol li input {    
-    border: 1px solid #a6a6a6;    
+    border: 1px solid #a6a6a6;
+    height: 17px;   
+    padding: 3px; 
+    -webkit-transition: border 0.5s;
+    -moz-transition: border 0.5s;
+    -o-transition: border 0.5s;
+    -ms-transition: border 0.5s;
+    transition: border 0.5s;
+}
+
+form ol li input:focus{
+    border: 1px solid #ff0000;
+        -moz-transition: border 0.5s;
+        -webkit-transition: border 0.5s;
+    -o-transition: border 0.5s;
+    -ms-transition: border 0.5s;
+    transition: border 0.5s;
+    outline: none;
 }
 
 .form-input{
     margin-left: 10px;
     border-radius: 1px;
+    
 }
 
 .form-input-link{
     margin-left: 10px;
 }
 
+input.url{
+    border-style: dashed;
+}
+input.url:focus{
+    border-style: dashed;
+}
 
+.btn{
+    width: 80px;
+    height: 30px;
+    margin: 10px 0 0 0;
+    color: #000;
+    background: #fff;
+    cursor: pointer;
+    border: 1px solid rgb(0, 0, 0);
+}
 
 
 .t-link{
@@ -157,4 +196,26 @@ form ol li input {
 
 .form-error{
     color: #f00;
+}
+
+.text-tiny{
+    color: #ff0000;
+    opacity: 0.2;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+.text-tiny:hover{
+    -webkit-transition: opacity 0.5s;
+   -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+    opacity: 1;
+}
+
+.svg-blogo, #layer1{
+    color: #fff;
 }

@@ -7,7 +7,12 @@ var pagenameerror = "";
 var pageurlerror = "";
 var pagelayouterror = "";
 var pagecontenterror = "";
-
+var pagename = Request["pagename"];
+var pageurl = Request["pageurl"];
+var pagedescr = Request["pagedescr"];
+var pageauthor = Request["pageauthor"];
+var pagelayout = Request["pagelayout"];
+var pagecontent = Request.Unvalidated("pagecontent");
 
 var db = Database.Open("Datebase");
 
@@ -16,33 +21,33 @@ var db = Database.Open("Datebase");
     FileInfo[] fileInfo = dirInfo.GetFiles("_*.cshtml", SearchOption.TopDirectoryOnly  );
 
     if(IsPost){
-        var pagename = Request["pagename"];
+        pagename = Request["pagename"];
         if(pagename.IsEmpty()){
             pagenameerror = "Заполните название страницы";
             IsValid = false;
         }
         
-        var pageurl = Request["pageurl"];
+        pageurl = Request["pageurl"];
         if(pageurl.IsEmpty()){
             pageurlerror = "У страницы должен быть адрес";
             IsValid = false;
         }
 
-        var pagedescr = Request["pagedescr"];
+        pagedescr = Request["pagedescr"];
         
 
-        var pageauthor = Request["pageauthor"];
+        pageauthor = Request["pageauthor"];
         
 
-        var pagelayout = Request["pagelayout"];
+        pagelayout = Request["pagelayout"];
         if(pagelayout.IsEmpty()){
             pagelayouterror = "Выбирете макет страницы";
             IsValid = false;
         }
 
-        var pagecontent = Request.Unvalidated("pagecontent");
+        pagecontent = Request.Unvalidated("pagecontent");
         if(pagecontent.IsEmpty()){
-            pagecontenterror = "Заполните контент сстраницы";
+            pagecontenterror = "Заполните содержимое страницы";
             IsValid = false;
         }
 
@@ -69,25 +74,27 @@ var db = Database.Open("Datebase");
 <form action="@Request.Url" method="post">
     <ol>
         <li>
-            <label for="pagename">Название страницы</label>
-            <input type="text" name="pagename" value=""/>
+            <label for="pagename">Название страницы*:</label>
+            <input type="text" name="pagename" value="@pagename"/>
             @pagenameerror
         </li>
         <li>
-            <label for="pageurl">Адрес страницы</label>
-            <input type="text" name="pageurl" value=""/>
+            <label for="pageurl">Адрес страницы*:</label>
+         
+            <span class="form-input-link"><span class="t-link">
+            @Request.Url.Scheme://@Request.Url.Authority/</span><input type="text" class="url" name="pageurl" value="@pageurl"/></span>
             @pageurlerror
         </li>
         <li>
-            <label for="c">Описание страницы</label>
-            <input type="text" name="pagedescr" value=""/>
+            <label for="c">Описание страницы:</label>
+            <input type="text" name="pagedescr" value="@pagedescr"/>
         </li>
         <li>
-            <label for="pageauthor">Автор страницы</label>
-            <input type="text" name="pageauthor" value=""/>
+            <label for="pageauthor">Автор страницы:</label>
+            <input type="text" name="pageauthor" value="@pageauthor"/>
         </li>
         <li>
-            <label for="pagelayout">Макет сраницы</label>
+            <label for="pagelayout">Макет сраницы*:</label>
             <select  name="pagelayout">
                 @foreach (var f in fileInfo)
                {
@@ -97,12 +104,12 @@ var db = Database.Open("Datebase");
             @pagelayouterror
         </li>
         <li>
-            <label for="pagecontent">Содежимое страницы</label>
+            <label for="pagecontent">Содежимое страницы*:</label>
             @pagecontenterror
-            <textarea name="pagecontent" style="width:100%;"></textarea>
+            <textarea name="pagecontent" style="width:80%;height: 400px;min-width: 400px;">@pagecontent</textarea>
         </li>
         <li>
-            <input type="submit" value="Сохранить"/>
+            <input type="submit" class="btn" value="Сохранить"/>
         </li>
     </ol>
 </form>
@@ -113,24 +120,13 @@ var db = Database.Open("Datebase");
 tinyMCE.init({
     mode : "textareas",
     theme : "advanced",
-    theme_advanced_buttons1 : "mybutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink,code,image,fontsizeselect",
+    theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink,code,image,fontsizeselect",
     theme_advanced_buttons2 : "",
     theme_advanced_buttons3 : "",
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
     theme_advanced_statusbar_location : "bottom",
     plugins : 'inlinepopups',
-    setup : function(ed) {
-        // Add a custom button
-        ed.addButton('mybutton', {
-            title : 'My button',
-            image : 'img/example.gif',
-            onclick : function() {
-                // Add you own code to execute something on click
-                ed.focus();
-                ed.selection.setContent('Hello world!');
-            }
-        });
-    }
+    
 });
 </script>

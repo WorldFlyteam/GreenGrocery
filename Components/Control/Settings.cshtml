@@ -4,6 +4,7 @@
     var db = Database.Open("Datebase");
 
     var dmetavalue = "";
+    var dstatvalue = "";
     var errorm = "";
 
     var dbstring = "SELECT * FROM Settings WHERE Id = @0";
@@ -11,12 +12,20 @@
     var dname = db.QuerySingle(dbstring, "2"); //geting Site Name
     var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
     var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
+    var ddkeyw = db.QuerySingle(dbstring, "6"); //geting Site Keywords
+    var dstat = db.QuerySingle(dbstring, "7"); //geting Site Statistics value
+
     if(dmeta.SetValue == "on"){
-        dmetavalue = " checked=\"checked\" ";
+        dstatvalue = " checked=\"checked\" ";
     } else {
-        dmetavalue = "";
+        dstatvalue = "";
     }
 
+    if(dstat.SetValue == "on"){
+        dstatvalue = " checked=\"checked\" ";
+    } else {
+        dstatvalue = "";
+    }
 
     if(IsPost){
         AntiForgery.Validate();
@@ -32,17 +41,24 @@
         if(pagesepr == null){
             
         }
+
+        var sitekeyw = Request["keywords"];
+
         var sitemeta = Request["sitemeta"];
         /*if(sitemeta == null){
             sitemeta = "false";
         }
         sitemeta = "true";*/
 
+        var sitestat = Request["sitestat"];
+
         try{
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitename, 2);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitelang, 1);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", pagesepr, 3);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitemeta, 4);
+            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitekeyw, 6);
+            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitestat, 7);
 
             
             Response.Redirect("~/Components/Control/Settings");
@@ -59,24 +75,44 @@
    
     <ol>
         <li>
-            <label for="sitename">Название сайта</label>
+            <label for="sitename">Название сайта:</label>
             <input type="text" name="sitename" value="@dname.SetValue"/>
         </li>
         <li>
-            <label for="sitelang">Язык сайта</label>
+            <label for="sitelang">Язык сайта:</label>
             <input type="text" name="sitelang" value="@dlang.SetValue"/>
            
         </li>
         <li>
-            <label for="pagesepr">@dps.SetDescr</label>
+            <label for="pagesepr">@dps.SetDescr:</label>
             <input type="text" name="pagesepr" value="@dps.SetValue"/>
         </li>
         <li>
-            <label for="sitemeta">@dmeta.SetDescr</label>
-            <input  type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
+            <label for="sitemeta">@dmeta.SetDescr:</label>
+            <input onchange="sitemetacheck()"  type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/> 
+            @if(dmeta.SetValue == "on"){
+            <span class="text-tiny">← Подумайте перед тем как выключать</span>
+            } 
         </li>
         <li>
-        <input type="submit" value="Сохранить"/>
+            <label for="keywords">Ключевые слова сайта:</label>
+            <input type="text"  name="keywords" value="@ddkeyw.SetValue"/>
+           
+        </li>
+        <li>
+            <label for="sitestat">Отправка общей статистики:</label>
+            <input type="checkbox" @Html.Raw(dstatvalue) name="sitestat"/> 
+            
+            <span class="text-tiny">← Это помогает развитию проекта</span>
+            
+        </li>
+        <li>
+        <input type="submit" class="btn" value="Сохранить"/>
         </li>
     </ol>
 </form>
+<script>
+    function sitemetacheck() {
+        
+    }
+</script>
