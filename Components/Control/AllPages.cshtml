@@ -1,6 +1,6 @@
 ﻿@{
     Page.Title = "Все страницы сайта";    
-
+    var hashcode = Request.GetHashCode();  
     var db = Database.Open("Datebase");
 
     var deletepage = Request["deletepage"];
@@ -21,16 +21,19 @@
 <p>Все доступные страницы</p>
         @grid.GetHtml(
                 tableStyle: "Grid",
-                headerStyle: "head",
-                alternatingRowStyle: "alt",
-                footerStyle: "pgr",
+                headerStyle: "grid-head",
+                //alternatingRowStyle: "alt",
+                footerStyle: "grid-pgr",
                 columns: grid.Columns(
-                    grid.Column(format: @<a href="PageEdit?id=@item.Id" title="Edit Page" ><img
-                        src="/components/ui/images/control/edit_page.gif" alt="Edit" class="GC" /></a>),
+                    grid.Column(format: @<a href="PageEdit?id=@item.Id"  class="grid-ctrl-ico grid-con" title="Редактирование страницы" >✏</a>),
                     
-                    grid.Column("Name", "Page Name", style: "GB"),
-                    grid.Column("Last Edited", format: @<i>@item.Date</i>),
-                    grid.Column(format: @<a href="AllPages.cshtml?deletepage=true&itemid=@item.Id" title="Delete" onclick="return confirm('Are you sure you want to delete ?')"><img
-                        src="/components/ui/images/control/_delete.gif" alt="Delete" class="GC" /></a>)
+                    grid.Column("Name", "Название страницы", style: "grid-GB"),
+                    grid.Column("Последнее изменение", format: @<i>@item.Date</i>),
+                    grid.Column(format: @<a onclick="pgdel(@hashcode, @item.Id)" class="grid-ctrl-ico grid-del" title="Удаление">☓</a>)
                 )
             )
+
+
+
+
+<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?deletepage=true&itemid=" + id + "&hash=" + @hashcode;}}</script>

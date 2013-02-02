@@ -14,11 +14,12 @@
     var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
     var ddkeyw = db.QuerySingle(dbstring, "6"); //geting Site Keywords
     var dstat = db.QuerySingle(dbstring, "7"); //geting Site Statistics value
+    var dstatcode = db.QuerySingle(dbstring, "8"); //geting Site Statistic Code
 
     if(dmeta.SetValue == "on"){
-        dstatvalue = " checked=\"checked\" ";
+        dmetavalue = " checked=\"checked\" ";
     } else {
-        dstatvalue = "";
+        dmetavalue = "";
     }
 
     if(dstat.SetValue == "on"){
@@ -52,6 +53,8 @@
 
         var sitestat = Request["sitestat"];
 
+        var sitestatcode = Request.Unvalidated("sitestatcode");
+
         try{
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitename, 2);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitelang, 1);
@@ -59,6 +62,7 @@
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitemeta, 4);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitekeyw, 6);
             db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitestat, 7);
+            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitestatcode, 8);
 
             
             Response.Redirect("~/Components/Control/Settings");
@@ -105,6 +109,12 @@
             
             <span class="text-tiny">← Это помогает развитию проекта</span>
             
+        </li>
+        <li>
+            <label for="sitestatcode">Код вашей статистики:</label>
+            
+            <textarea name="sitestatcode">@dstatcode.SetValue</textarea>
+           
         </li>
         <li>
         <input type="submit" class="btn" value="Сохранить"/>

@@ -7,7 +7,8 @@ var linklabelvalid = false;
 var pagelinkvalid = false;
 var linklabel = Request["linklabel"];
 var pagelink = Request["pagelink"];
-var linkorder = Request["linkorder"];    
+var linkorder = Request["linkorder"]; 
+var hashcode = Request.GetHashCode();   
 
 
     var db = Database.Open("Datebase");
@@ -18,7 +19,9 @@ var linkorder = Request["linkorder"];
         var deleteitemid = Request["itemid"];
         
         
-        db.Execute("delete from SiteMenu where Id=@0", deleteitemid);
+            db.Execute("delete from SiteMenu where Id=@0", deleteitemid);
+            
+        
         Response.Redirect("SiteMenu");
     }
 
@@ -128,16 +131,15 @@ var linkorder = Request["linkorder"];
 
 <h2>Доступные пункты меню</h2>
 @grid.GetHtml(tableStyle: "Grid",
-                headerStyle: "head",
-                alternatingRowStyle: "alt", 
+                headerStyle: "grid-head",
+                //alternatingRowStyle: "grid-alt", 
                 columns:grid.Columns(
-                    grid.Column("Label", "Label", style: "GB"), 
-                    grid.Column("Link", format:@<i>@item.Link</i>),
-                    grid.Column("Order",format:@<span class="GB"><a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=1&id=@item.Id"><img
-                        src="/components/ui/images/control/up.gif" alt="up" class="GC"/></a>
-                    <a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=-1&id=@item.Id"><img src="/components/ui/images/control/down.gif" alt="down" class="rcGC" style="margin-right:10px" /></a>@item.OrderId</span>),
+                    grid.Column("Label", "Имя пункта", style: "grid-GB"), 
+                    grid.Column("Ссылка", format:@<i>@item.Link</i>),
+                    grid.Column("Номер",format:@<span class="grid-GB"><a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=1&id=@item.Id" class="grid-ctrl-ico grid-con">↑</a>
+                    <a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=-1&id=@item.Id" class="grid-ctrl-ico grid-con">↓</a>@item.OrderId</span>),
                     grid.Column("Target", "Target"),
-                    grid.Column(format:@<a href="SiteMenu.cshtml?deletemenuitem=true&itemid=@item.Id" onclick="return confirm('Are you sure you want to delete ?')" title="Delete"><img
-                        src="/components/ui/images/control/delete.gif" class="GC" alt="Delete" /></a>)
+                    grid.Column(format:@<a onclick="itemdel(@hashcode, @item.Id)" class="grid-ctrl-ico grid-del" onclick="return confirm('Вы уверены, что хотите удалить?')" title="Удаление">☓</a>)
                                     )
                             )
+
