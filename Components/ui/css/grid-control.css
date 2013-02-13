@@ -21,6 +21,7 @@
     font-size: 20px;
     text-decoration: none;
     font-weight: 900;
+    cursor: pointer;
 }
 
 .grid-del {

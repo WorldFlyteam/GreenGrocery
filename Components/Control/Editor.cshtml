@@ -57,7 +57,7 @@
         });
 </script>
 <form name="selectLayout" id="selectLayout" method="get" action="">
-    @AntiForgery.GetHtml()
+ 
 
         @errMSG
         <ol>
@@ -82,10 +82,28 @@
     </form>
 
 
-    <form name="fileEdit"   method="post" action="">
+    <form name="fileEdit" id="fileEdit"  method="post" action="">
         @AntiForgery.GetHtml()
-    <textarea name="fileContent" rows="30" cols="90">@fileContent</textarea>
+    
+     
+<textarea name="fileContent" rows="30" cols="90">@fileContent</textarea>
               <p class="form-actions">
             <input type="submit" class="btn" value="Update" title="Update" />
         </p>
-     </form>
+         <script>
+
+     document.onkeydown = function (e) {
+         e = e || event;
+
+
+         if ((e.ctrlKey && e.keyCode == 'S'.charCodeAt(0))) {
+             save();
+             return false;
+         }
+     }
+     function save() {
+         document.getElementsById("fileEdit").submit();
+         
+     }
+
+         </script></form>

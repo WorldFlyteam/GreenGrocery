@@ -9,6 +9,12 @@ h1, h2, h3, h4, h5, h6{
 font-weight: normal;
 }
 
+a{
+     color: #0000ff;
+}
+a:hover{
+     color: #f00;
+}
 
 
 /* Layout */
@@ -36,10 +42,12 @@ padding: .4em 0;
 }
 
 .app a{
-    /*background: url(/components/ui/images/worldflyproject.png) no-repeat;*/
-    
+    /*background: url(/components/ui/images/worldflyproject.png) no-repeat;
+    */
         background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHdpZHRoPSI0NiIgaGVpZ2h0PSI2NyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8IS0tIENyZWF0ZWQgd2l0aCBTVkctZWRpdCAtIGh0dHA6Ly9zdmctZWRpdC5nb29nbGVjb2RlLmNvbS8gLS0+CiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcvPgogIDx0ZXh0IHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEuMDQ1ODU3MzE1Nzk2MzU0MiwwLC00LjExMDE3NDUwMDk3NDE4NTUpICIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIHN0cm9rZS13aWR0aD0iMCIgc3Ryb2tlPSIjMDAwMDAwIiBmaWxsPSIjZmZmZmZmIiBpZD0ic3ZnXzEiIHk9IjUwLjE5NDY4IiB4PSIyMiI+JiMxNjk7PC90ZXh0PgogPC9nPgo8L3N2Zz4=) no-repeat;
-    display: block;
+    
+    
+        display: block;
     height: 60px;
     margin: -17px 0 0 14px;
     text-indent: -9999px;
@@ -92,7 +100,12 @@ padding: .4em 0;
     
     margin: -70px 0 0 0;
     width: 100%;
+    /*
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHdpZHRoPSIxMzQiIGhlaWdodD0iODQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPCEtLSBDcmVhdGVkIHdpdGggU1ZHLWVkaXQgLSBodHRwOi8vc3ZnLWVkaXQuZ29vZ2xlY29kZS5jb20vIC0tPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDx0ZXh0IHhtbDpzcGFjZT0icHJlc2VydmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJTYW5zLXNlcmlmIiBmb250LXNpemU9Ijc2IiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZT0iIzAwMDAwMCIgZmlsbD0iI2ZmZmZmZiIgaWQ9InN2Z18xIiB5PSI2OCIgeD0iMjgiPiYjMTY5OzwvdGV4dD4KICA8dGV4dCB4bWw6c3BhY2U9InByZXNlcnZlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iU2Fucy1zZXJpZiIgZm9udC1zaXplPSIzOSIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2U9IiMwMDAwMDAiIGZpbGw9IiNmZmZmZmYiIGlkPSJzdmdfMiIgeT0iNTIiIHg9Ijk2Ij5lcmVzPC90ZXh0PgogPC9nPgo8L3N2Zz4=) no-repeat bottom left;
+    */
+    background: url(/Components/ui/images/wf-f-logo.png) no-repeat bottom left;
+    
+
 }
 
 .copyright{
@@ -141,10 +154,11 @@ form ol li label {
     font-size: 1.3em;
 }
 
-form ol li input {    
+.input {    
     border: 1px solid #a6a6a6;
     height: 17px;   
     padding: 3px; 
+    width: 190px;
     -webkit-transition: border 0.5s;
     -moz-transition: border 0.5s;
     -o-transition: border 0.5s;
@@ -152,7 +166,7 @@ form ol li input {
     transition: border 0.5s;
 }
 
-form ol li input:focus{
+.input:focus{
     border: 1px solid #ff0000;
         -moz-transition: border 0.5s;
         -webkit-transition: border 0.5s;
@@ -160,6 +174,34 @@ form ol li input:focus{
     -ms-transition: border 0.5s;
     transition: border 0.5s;
     outline: none;
+}
+
+.textarea-set{
+    width: 280px;
+    height: 90px;
+    border: 1px solid #a6a6a6;
+    -webkit-transition: border 0.5s;
+    -moz-transition: border 0.5s;
+    -o-transition: border 0.5s;
+    -ms-transition: border 0.5s;
+    transition: border 0.5s;
+}
+
+.textarea-set:focus{
+    border: 1px solid #ff0000;
+    -moz-transition: border 0.5s;
+    -webkit-transition: border 0.5s;
+    -o-transition: border 0.5s;
+    -ms-transition: border 0.5s;
+    transition: border 0.5s;
+    outline: none;
+}
+
+.table-label{
+    width: 180px;
+    text-align: right;
+    vertical-align: text-top;
+    font-size: 1.1em;
 }
 
 .form-input{
@@ -218,4 +260,53 @@ input.url:focus{
 
 .svg-blogo, #layer1{
     color: #fff;
+}
+
+.add-onedit{
+    opacity: 0.2;
+        
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    transition: opacity 1s;
+}
+.add-onedit:hover{
+    opacity: 1;
+     -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+/* Home */
+
+.home-start{
+    display: block;
+    width: 100%;
+    min-height: 300px;
+    border: 1px solid #f3a7a7;
+    background: #fdfcfc;
+    border-radius:10px; 
+    padding: 5px;
+}
+/*.home-start:after{
+    clear: both;
+}*/
+
+.home-start-header{
+    margin: -3px 0 5px 0;
+}
+
+.home-start-steps{
+    float: left;
+    background: #f9f9da;
+    min-width: 200px;
+    width: 30%;
+    margin: 0 10px 0 10px;
+    padding: 5px;
+    border-radius: 5px;
+    min-height: 200px;
+    color: #862424;
 }

@@ -76,53 +76,124 @@
 @errorm
 <form action="@Request.Url" method="post">
     @AntiForgery.GetHtml()
-   
-    <ol>
+   <table>
+        <tbody>
+            <tr>
+                <td class="table-label">
+                    <label for="sitename">Название сайта:</label>
+                </td>
+                <td>
+                    <input id="sitename" class="input" type="text" name="sitename" value="@dname.SetValue"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-label">
+                   <label for="sitelang">Язык сайта:</label>
+                </td>
+                <td>
+                    <input id="sitelang" class="input" type="text" name="sitelang" value="@dlang.SetValue"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-label">
+                    <label for="pagesepr">@dps.SetDescr:</label>
+                </td>
+                <td>
+                    <input id="pagesepr" class="input" type="text" name="pagesepr" value="@dps.SetValue"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="sitemeta">@dmeta.SetDescr:</label>
+                </td>
+                <td>
+                    <input class="meta" id="sitemeta" type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
+            @if(dmeta.SetValue == "on"){
+            <span class="text-tiny">← Подумайте перед тем как выключать</span>
+            } 
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="keywords">Ключевые слова сайта:</label>
+                </td>
+                <td>
+                    <input id="keywords" class="input" type="text"  name="keywords" value="@ddkeyw.SetValue"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="sitestat">Отправка общей статистики:</label>
+                </td>
+                <td>
+                    <input id="sitestat" class="stat" type="checkbox" @Html.Raw(dstatvalue) name="sitestat"/> 
+            
+            <span class="text-tiny">← Это помогает развитию проекта</span>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label  for="sitestatcode">Код вашей статистики:</label>
+                </td>
+                <td>
+                    <textarea class="textarea-set" id="sitestatcode" name="sitestatcode">@dstatcode.SetValue</textarea>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <input type="submit" class="btn" value="Сохранить"/>
+                </td>
+                
+            </tr>
+        </tbody>
+   </table>
+    
+    @*<ol>
         <li>
             <label for="sitename">Название сайта:</label>
-            <input type="text" name="sitename" value="@dname.SetValue"/>
+            
         </li>
         <li>
             <label for="sitelang">Язык сайта:</label>
-            <input type="text" name="sitelang" value="@dlang.SetValue"/>
+            <input id="sitelang" type="text" name="sitelang" value="@dlang.SetValue"/>
            
         </li>
         <li>
             <label for="pagesepr">@dps.SetDescr:</label>
-            <input type="text" name="pagesepr" value="@dps.SetValue"/>
+            <input id="pagesepr" type="text" name="pagesepr" value="@dps.SetValue"/>
         </li>
         <li>
-            <label for="sitemeta">@dmeta.SetDescr:</label>
-            <input onchange="sitemetacheck()"  type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/> 
+            <label for="sitemeta">@dmeta.SetDescr:
+            <input class="meta" id="sitemeta" type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/> </label>
             @if(dmeta.SetValue == "on"){
             <span class="text-tiny">← Подумайте перед тем как выключать</span>
             } 
         </li>
         <li>
             <label for="keywords">Ключевые слова сайта:</label>
-            <input type="text"  name="keywords" value="@ddkeyw.SetValue"/>
+            <input id="keywords" type="text"  name="keywords" value="@ddkeyw.SetValue"/>
            
         </li>
         <li>
             <label for="sitestat">Отправка общей статистики:</label>
-            <input type="checkbox" @Html.Raw(dstatvalue) name="sitestat"/> 
+            <input id="sitestat" class="stat" type="checkbox" @Html.Raw(dstatvalue) name="sitestat"/> 
             
             <span class="text-tiny">← Это помогает развитию проекта</span>
             
         </li>
         <li>
-            <label for="sitestatcode">Код вашей статистики:</label>
+            <label  for="sitestatcode">Код вашей статистики:</label>
             
-            <textarea name="sitestatcode">@dstatcode.SetValue</textarea>
+            <textarea id="sitestatcode" name="sitestatcode">@dstatcode.SetValue</textarea>
+           
+        </li>
+        <li>
+            <label for="logo">Ключевые слова сайта:</label>
+            <input type="file" name="logo"/>
            
         </li>
         <li>
         <input type="submit" class="btn" value="Сохранить"/>
         </li>
-    </ol>
+    </ol>*@
 </form>
-<script>
-    function sitemetacheck() {
-        
-    }
-</script>

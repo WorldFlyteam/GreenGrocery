@@ -9,11 +9,11 @@
 
     var page = db.QuerySingle("SELECT * FROM Pages WHERE Url = @0", pageId);
     if (page == null) {
-       try{
+       /*try{
         page = db.QuerySingle("SELECT * FROM Pages WHERE Id = @0", pageId);
-        } catch{
+        } catch{*/
             Response.SetStatus(HttpStatusCode.NotFound);    
-        }
+       // }
         
     }
 

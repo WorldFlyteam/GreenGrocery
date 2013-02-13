@@ -55,7 +55,7 @@ var db = Database.Open("Datebase");
         if(IsValid){
         try
              {
-                 db.Execute("INSERT into Pages (Name, Content, Date, Url, Layout, Description, Author) values (@0, @1, @2, @3, @4, @5, @6)", pagename, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthor);
+                 db.Execute("INSERT into Pages (Name, Content, Date, Url, Layout, Description, Author, Submitted) values (@0, @1, @2, @3, @4, @5, @6, @7)", pagename, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthor, today);
                 
                  Response.Redirect("~/Components/Control/PageEdit?id=" + db.GetLastInsertId());
              }
@@ -72,6 +72,65 @@ var db = Database.Open("Datebase");
 
 @errMSG
 <form action="@Request.Url" method="post">
+    <table>
+        <tbody>
+            <tr>
+                <td class="table-label">
+                    <label for="pagename">Название страницы*:</label>
+                </td>
+                <td>
+                    <input required type="text" class="input" id="pagename" name="pagename" value="@pagename"/>
+                    @pagenameerror
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="pageurl">Адрес страницы*:</label>
+                </td>
+                <td>
+                    <span class="form-input-link"><span class="t-link">
+            @Request.Url.Scheme://@Request.Url.Authority/</span><input required type="text" id="pageurl" class="input url" name="pageurl" value="@pageurl"/></span>
+            @pageurlerror
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="pagedescr">Описание страницы:</label>
+                </td>
+                <td>
+                    <input type="text"  class="input" id="pagedescr" name="pagedescr" value="@pagedescr"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="pageauthor">Автор страницы:</label>
+                </td>
+                <td>
+                    <input type="text" class="input" id="pageauthor" name="pageauthor" value="@pageauthor"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="pagelayout">Макет сраницы*:</label>
+                </td>
+                <td>
+                    <select required id="pagelayout" name="pagelayout">
+                @foreach (var f in fileInfo)
+               {
+                <option value="@Functions.CleanRCNames(f.Name)" >@Functions.CleanRCNames(f.Name)</option>
+               }
+            </select>
+            @pagelayouterror
+                </td>
+            </tr>
+        </tbody>
+    
+    </table>
+    <label class="table-label" for="pagecontent">Содежимое страницы*:</label>
+    @pagecontenterror
+            <textarea name="pagecontent" style="width:80%;height: 400px;min-width: 400px;">@pagecontent</textarea>
+     <input type="submit" class="btn" value="Сохранить"/>
+    @*
     <ol>
         <li>
             <label for="pagename">Название страницы*:</label>
@@ -111,7 +170,7 @@ var db = Database.Open("Datebase");
         <li>
             <input type="submit" class="btn" value="Сохранить"/>
         </li>
-    </ol>
+    </ol>*@
 </form>
 
 

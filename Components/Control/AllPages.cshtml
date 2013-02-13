@@ -13,7 +13,10 @@
         Response.Redirect("AllPages");
     }
 
-    var data = db.Query("Select Id, Name, Date from Pages order by Date DESC");
+
+    var edititem = Request[""];
+
+    var data = db.Query("Select Id, Name, Date, Url, Submitted from Pages order by Date DESC");
 
     var grid = new WebGrid(source: data,
                             rowsPerPage: 20);
@@ -28,12 +31,13 @@
                     grid.Column(format: @<a href="PageEdit?id=@item.Id"  class="grid-ctrl-ico grid-con" title="Редактирование страницы" >✏</a>),
                     
                     grid.Column("Name", "Название страницы", style: "grid-GB"),
-                    grid.Column("Последнее изменение", format: @<i>@item.Date</i>),
+                    grid.Column("Adress", "Адрес страницы", format: @<a href="/@item.Url" target="_blank"><i>/@item.Url</i></a>),
+                    grid.Column("LastEdit", "Последнее изменение", format: @<i>@item.Date</i>),
+                    grid.Column("Submitted", "Отправлено"),
                     grid.Column(format: @<a onclick="pgdel(@hashcode, @item.Id)" class="grid-ctrl-ico grid-del" title="Удаление">☓</a>)
                 )
             )
 
 
 
-
-<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?deletepage=true&itemid=" + id + "&hash=" + @hashcode;}}</script>
+<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?deletepage=true&itemid=" + id + "&hash=" + @hashcode;}return false;}</script>

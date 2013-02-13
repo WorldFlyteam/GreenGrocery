@@ -1,42 +1,21 @@
-﻿@using System.Data;
-@using System.Xml;
-
-@{
+﻿@{
     Page.Title = "Панель управления"; 
 
-    XmlTextReader reader = new XmlTextReader("https://github.com/WorldFlyteam/InternalCMS/commits/master.atom");
-    DataSet ds = new DataSet();
-    try
-    {
-        ds.ReadXml(reader) ;
-    }
-    catch (Exception)
-    {}
+    var db = Database.Open("Datebase");
+    var tipson = db.QuerySingle("SELECT * FROM Settings WHERE Id = @0", "11");
     
 }
+@if(tipson.SetValue == "on"){
 <div class="home-start">
-    <div class="home-start-step1">
-        
+    <h2 class="home-start-header">Начало работы:</h2>
+    <div class="home-start-steps home-start-step1">
+        1
     </div>
-    <div class="home-start-step2">
-        
+    <div class="home-start-steps home-start-step2">
+        2
     </div>
-    <div class="home-start-step3">
-        
+    <div class="home-start-steps home-start-step3">
+        3
     </div>
 </div>
-
-<div>
-
-   <ol reversed>
-       @foreach (DataRow entry in ds.Tables[2].Rows)
-       {
-       <li> 
-            <h3>@entry[2]</h3>
-           
-          
-         
-       </li>
-       }
-   </ol>
-</div>
+}
