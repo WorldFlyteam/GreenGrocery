@@ -1,21 +1,30 @@
 ﻿@{
     //super simple login page
     //just to provide basic protection for control panel
-
+    var IsValid = true;
     if (IsPost){
 
-        var un = Request["uName"];
-        var up = Request["uPwd"];
+        var name = Request["Name"];
+        if(name.IsEmpty()){
+            IsValid = false;
+        }
+
+        var password = Request["Password"];
+        if(password.IsEmpty()){
+            IsValid = false;
+        }
         
-    
-        var db = Database.Open("Database");
-        var sqlSelect = "Select * from Users where User=@0 and Password=@1";
-        var data = db.QuerySingle (sqlSelect, un, up);
+        if(IsValid){ 
+            var db = Database.Open("Datebase");
         
-        if (data!=null)
-        {
-            FormsAuthentication.RedirectFromLoginPage(un, false);
+            var data = db.QuerySingle("SELECT * FROM Users WHERE Email = @0, Password = @1", name, password);
+            //var data = db.QuerySingle("SELECT * FROM Users WHERE Password = @0", password);
         
+            if (data!=null)
+            {
+                FormsAuthentication.RedirectFromLoginPage(name, false);
+        
+            }
         }
         
     }
@@ -93,12 +102,12 @@
         <legend>Login</legend>
         <ol>
             <li >
-                <label for="uName">User:</label>
-                <input type="text" name="uName" id="uName" value="" maxlength="50" />
+                <label for="Name">User:</label>
+                <input type="text" name="Name" id="uName" value="" maxlength="50" />
                 </li>
                 <li>
-                <label for="uPwd">Password:</label>
-                <input type="password" name="uPwd" id="uPwd" value="" />
+                <label for="Password">Password:</label>
+                <input type="password" name="Password" id="uPwd" value="" />
             </li>
         </ol>
           <p class="form-actions">
