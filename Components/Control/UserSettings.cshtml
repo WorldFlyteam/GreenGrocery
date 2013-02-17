@@ -1,0 +1,71 @@
+﻿@{
+    Page.Title = "Настройки аккаунта";
+    var UserName = WebSecurity.CurrentUserName;
+
+    var db = Database.Open("Datebase");
+
+    var data = db.QuerySingle("SELECT * FROM Account WHERE UserName = @0", UserName);
+    //var sqlreqests = new string[3] {"SELECT ", "2"};
+    var IsValid = true;
+    var errorm = "";
+
+    if(IsPost){
+        AntiForgery.Validate();
+        var Name = Request["Name"];
+        
+        var Email = Request["Email"];
+
+        var Password = Request["Password"];
+        if(Password.IsEmpty()){
+            IsValid = false;
+        }
+
+        if(IsValid){
+            try{
+                db.Execute("UPDATE Account SET Name=@0, Email=@1, Password=@2 WHERE UserName=@3", Name, Email, Password, UserName);
+                Response.Redirect("UserSettings");
+            } catch(Exception ex){
+                errorm = ex.Message.ToString();
+            }
+        }
+    }
+
+}
+@errorm
+<form action="" method="post">
+    @AntiForgery.GetHtml()
+    <table>
+        <tbody>
+            <tr>
+                <td class="table-label">
+                    <label for="Name">Ваше имя:</label>
+                </td>
+                <td>
+                    <input id="Name" class="input" type="text" name="Name" value="@data.Name"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="Email">Адрес электронной почты:</label>
+                </td>
+                <td>
+                    <input id="Email" class="input" type="email" name="Email" value="@data.Email"/>
+                </td>
+            </tr>
+        <tr>
+                <td class="table-label">
+                    <label for="Password">Пароль:</label>
+                </td>
+                <td>
+                    <input id="Password" class="input" type="password" name="Password" value="@data.Password"/>
+                </td>
+            </tr>
+ <tr>
+                <td class="table-label">
+                    <input type="submit" class="btn" value="Сохранить"/>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+</form>

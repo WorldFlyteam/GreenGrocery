@@ -1,119 +1,121 @@
 ﻿@{
-    //super simple login page
-    //just to provide basic protection for control panel
     var IsValid = true;
-    if (IsPost){
+    var usernamevalid = true;
+    var passwordvalid = true;
+    var forgeyvalid = true;
+    var errorm = "";
 
-        var name = Request["Name"];
-        if(name.IsEmpty()){
+    if(IsPost){
+        AntiForgery.Validate();
+        var username = Request["user"];
+        if(username.IsEmpty()){
+            usernamevalid = false;
             IsValid = false;
         }
 
-        var password = Request["Password"];
+        var password = Request["password"];
         if(password.IsEmpty()){
+            passwordvalid = false;
             IsValid = false;
         }
-        
-        if(IsValid){ 
+
+        var forgeyinput = Request["name"];
+        if(!forgeyinput.IsEmpty()){
+            forgeyvalid = false;
+            IsValid = false;
+        }
+
+        if(IsValid){
             var db = Database.Open("Datebase");
-        
-            var data = db.QuerySingle("SELECT * FROM Users WHERE Email = @0, Password = @1", name, password);
-            //var data = db.QuerySingle("SELECT * FROM Users WHERE Password = @0", password);
-        
-            if (data!=null)
-            {
-                FormsAuthentication.RedirectFromLoginPage(name, false);
-        
+
+            try{
+                var data = db.QuerySingle("Select * from Account where UserName=@0 and Password=@1", username, password);
+                if (data!=null)
+                {
+                    FormsAuthentication.RedirectFromLoginPage(username, false);
+                    var ReturnUrl = Request["ReturnUrl"];
+                    if(ReturnUrl.IsEmpty()){
+                        ReturnUrl = "/Components/Control";
+                    }
+                    Response.Redirect(ReturnUrl);
+                }
+            } catch(Exception ex){
+                errorm = ex.Message.ToString();
             }
         }
-        
     }
-    
-    
-    }
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>razorC.net - login page</title>
-        
-        <style type="text/css" >
-            body {
-        background-color: #ffffff;
-        font-size: .85em;
-        font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-        margin: 0;
-        padding: 0;
-        color: #696969;
-    }
-            fieldset {
-        margin: 1em 0;
-        padding: 1em;
-        border: 1px solid #CCC;
-    }
-
-        fieldset legend {
-            font-size: 1.1em;
-            font-weight: bold;
-            padding: 2px 4px 8px 4px;
-        }
-    
-        fieldset ol {
-            padding: 0;
-            list-style: none;
-        }
-    
-            fieldset ol li {
-                padding-bottom: 5px;
-            }
-    
-        fieldset label {
-            display: block;
-        }
-    
-        fieldset label.checkbox {
-            display: inline;
-        }
-    
-       fieldset input[type="text"], input[type="password"] {
-        border: 1px solid #ccc;
-        padding: 5px;
-        font-size: 1.2em;
-        color: #444;
-        width: 300px;
-    }
-
-         fieldset input[type="submit"]
-{
-    font-size: 1.2em;
-    padding: 10px 15px 10px 15px;
-    background-color: #71B1D1;
-    color: #ffffff;
-    border:none;
-
 }
-     fieldset input[type="submit"]:hover {
-        background-color:#7CC1DE;
-    }
-        </style>
+
+<!DOCTYPE html>
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Вход - Ceres Project</title>
     </head>
     <body>
-        <form method="post" action="">
- <fieldset>
-        <legend>Login</legend>
-        <ol>
-            <li >
-                <label for="Name">User:</label>
-                <input type="text" name="Name" id="uName" value="" maxlength="50" />
-                </li>
-                <li>
-                <label for="Password">Password:</label>
-                <input type="password" name="Password" id="uPwd" value="" />
-            </li>
-        </ol>
-          <p class="form-actions">
-            <input type="submit" value="Login" title="Login" />
-        </p>
-</fieldset>
-</form>
+    @if(WebSecurity.IsAuthenticated){
+        <text>
+            <h1>Вы уже вошли в систему</h1>
+        </text>
+        }else{
+        <text>
+        @errorm
+        @if(!forgeyvalid){
+            <text>
+                Робот
+            </text>
+        }
+        <form action="" method="post">
+            @AntiForgery.GetHtml()
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="table-label">
+                            <label for="user">Имя пользователя</label>
+                        </td>
+                        <td>
+                            <input type="text" name="user" id="user" class="input" value=""/>
+                            @if(!usernamevalid){
+                                <text>
+                                    Вы не ввели имя пользователя
+                                </text>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-label">
+                            <label for="password">Пароль</label>
+                        </td>
+                        <td>
+                            <input type="password" name="password" id="password" class="input" value=""/>
+                            @if(!passwordvalid){
+                                <text>
+                                    Вы не ввели пароль
+                                </text>
+                            }
+                        </td>
+                    </tr>
+                <tr style="display: none;">
+                        <td class="table-label">
+                             <label for="email">Email</label>
+                        </td>
+                        <td>
+                            <input type="email" name="email" id="email" class="input" value=""/>
+                        </td>
+                    </tr>
+                <tr>
+                        <td class="table-label">
+                            <input type="submit" value="Отправить"/>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        </text>
+               }
     </body>
 </html>

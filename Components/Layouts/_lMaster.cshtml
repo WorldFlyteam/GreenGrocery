@@ -2,35 +2,22 @@
     var db = Database.Open("Datebase");
 
 
-    var dbstring = "SELECT * FROM Settings WHERE Id = @0";
+    var data = db.QuerySingle("SELECT * FROM Settings WHERE Id = @0", 1);
   
-    var dlang = db.QuerySingle(dbstring, "1"); //geting Site Lang
-
-    var dname = db.QuerySingle(dbstring, "2"); //geting Site Name
-
-    var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
-
-    var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
-
-    var ddkeyw = db.QuerySingle(dbstring, "6"); //geting Site Keywords
-
-    var dstat = db.QuerySingle(dbstring, "7"); //geting Site Statistic
-
-    var dstatcode = db.QuerySingle(dbstring, "8"); //geting Site Statistic Code
 }
 
 <!DOCTYPE html>
 
-<html lang="@dlang.SetValue">
+<html lang="@data.SiteLang">
    <head>
         <meta charset="utf-8" />
-        <title>@Page.Title @dps.SetValue @dname.SetValue</title>
-
+        <title>@Page.Title @data.PageNameSep @data.SiteName</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-        @if(dmeta.SetValue == "on"){
+        @if(data.SiteMeta == "on"){
         <meta name="description" content="@Page.Description"/>
-        <meta name="keywords" content="@Page.Keywords, @ddkeyw.SetValue"/>
+        <meta name="keywords" content="@Page.Keywords, @data.SiteKeywords"/>
         <meta name="author" content="@Page.Author"/>
         }
 
@@ -41,8 +28,8 @@
 
 
 
-       @Html.Raw(dstatcode.SetValue)
-        @if(dstat.SetValue == "on"){
+       @Html.Raw(data.SiteStatCode)
+        @if(data.SiteStat == "on"){
 @*        <script>(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter206275 = new Ya.Metrika({id:206275, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, trackHash:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/206275" style="position:absolute; left:-9999px;" alt="" /></div></noscript>*@
 <script>new Image().src = "//counter.yadro.ru/hit?r" + escape(document.referrer) + ((typeof(screen)=="undefined")?"" : ";s"+screen.width+"*"+screen.height+"*" + (screen.colorDepth?screen.colorDepth:screen.pixelDepth)) + ";u"+escape(document.URL) + ";h"+escape(document.title.substring(0,80)) + ";" +Math.random();</script>
 }

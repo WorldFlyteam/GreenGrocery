@@ -7,22 +7,16 @@
     var dstatvalue = "";
     var errorm = "";
 
-    var dbstring = "SELECT * FROM Settings WHERE Id = @0";
-    var dlang = db.QuerySingle(dbstring, "1"); //geting Site Lang
-    var dname = db.QuerySingle(dbstring, "2"); //geting Site Name
-    var dps = db.QuerySingle(dbstring, "3"); //geting Page Name Separator
-    var dmeta = db.QuerySingle(dbstring, "4"); //geting meta enable
-    var ddkeyw = db.QuerySingle(dbstring, "6"); //geting Site Keywords
-    var dstat = db.QuerySingle(dbstring, "7"); //geting Site Statistics value
-    var dstatcode = db.QuerySingle(dbstring, "8"); //geting Site Statistic Code
 
-    if(dmeta.SetValue == "on"){
+    var data = db.QuerySingle("SELECT * FROM Settings WHERE Id = @0", 1);
+
+    if(data.SiteMeta == "on"){
         dmetavalue = " checked=\"checked\" ";
     } else {
         dmetavalue = "";
     }
 
-    if(dstat.SetValue == "on"){
+    if(data.SiteStat == "on"){
         dstatvalue = " checked=\"checked\" ";
     } else {
         dstatvalue = "";
@@ -56,15 +50,8 @@
         var sitestatcode = Request.Unvalidated("sitestatcode");
 
         try{
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitename, 2);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitelang, 1);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", pagesepr, 3);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitemeta, 4);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitekeyw, 6);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitestat, 7);
-            db.Execute("UPDATE Settings SET SetValue=@0 WHERE Id=@1", sitestatcode, 8);
-
-            
+            db.Execute("UPDATE Settings SET SiteName=@0, SiteLang=@1, PageNameSep=@2, SiteMeta=@3, SiteKeywords=@4, SiteStat=@5, SiteStatCode=@6 WHERE Id=@7", sitename, sitelang, pagesepr, sitemeta, sitekeyw, sitestat, sitestatcode, 1);
+                        
             Response.Redirect("~/Components/Control/Settings");
         } catch (Exception ex){
             errorm = ex.Message.ToString();
@@ -83,7 +70,7 @@
                     <label for="sitename">Название сайта:</label>
                 </td>
                 <td>
-                    <input id="sitename" class="input" type="text" name="sitename" value="@dname.SetValue"/>
+                    <input id="sitename" class="input" type="text" name="sitename" value="@data.SiteName"/>
                 </td>
             </tr>
             <tr>
@@ -91,24 +78,24 @@
                    <label for="sitelang">Язык сайта:</label>
                 </td>
                 <td>
-                    <input id="sitelang" class="input" type="text" name="sitelang" value="@dlang.SetValue"/>
+                    <input id="sitelang" class="input" type="text" name="sitelang" value="@data.SiteLang"/>
                 </td>
             </tr>
             <tr>
                 <td class="table-label">
-                    <label for="pagesepr">@dps.SetDescr:</label>
+                    <label for="pagesepr">Разделитель названия страницы:</label>
                 </td>
                 <td>
-                    <input id="pagesepr" class="input" type="text" name="pagesepr" value="@dps.SetValue"/>
+                    <input id="pagesepr" class="input" type="text" name="pagesepr" value="@data.PageNameSep"/>
                 </td>
             </tr>
         <tr>
                 <td class="table-label">
-                    <label for="sitemeta">@dmeta.SetDescr:</label>
+                    <label for="sitemeta">Мета данные:</label>
                 </td>
                 <td>
                     <input class="meta" id="sitemeta" type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
-            @if(dmeta.SetValue == "on"){
+            @if(data.SiteMeta == "on"){
             <span class="text-tiny">← Подумайте перед тем как выключать</span>
             } 
                 </td>
@@ -118,7 +105,7 @@
                     <label for="keywords">Ключевые слова сайта:</label>
                 </td>
                 <td>
-                    <input id="keywords" class="input" type="text"  name="keywords" value="@ddkeyw.SetValue"/>
+                    <input id="keywords" class="input" type="text"  name="keywords" value="@data.SiteKeywords"/>
                 </td>
             </tr>
         <tr>
@@ -136,7 +123,7 @@
                     <label  for="sitestatcode">Код вашей статистики:</label>
                 </td>
                 <td>
-                    <textarea class="textarea-set" id="sitestatcode" name="sitestatcode">@dstatcode.SetValue</textarea>
+                    <textarea class="textarea-set" id="sitestatcode" name="sitestatcode">@data.SiteStatCode</textarea>
                 </td>
             </tr>
         <tr>

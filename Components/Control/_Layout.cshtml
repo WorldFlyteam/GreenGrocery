@@ -1,5 +1,5 @@
 ﻿@{
-
+    var menulink = new string[7] {"/Components/Control/Default", "/Components/Control/AllPages", "/Components/Control/NewPage", "/Components/Control/SiteMenu", "/Components/Control/Editor", "/Components/Control/Settings", "/Components/Control/UserSettings"};
 }
 
 <!DOCTYPE html>
@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <title>@Page.Title - Ceres Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Components/ui/css/Global.css" rel="stylesheet"/>
     <link href="~/Components/ui/css/ControlPanel.css" rel="stylesheet"/>
     <link href="~/Components/ui/css/grid-control.css" rel="stylesheet"/>
@@ -29,6 +30,7 @@
         <h1 class="page-title">
             @Page.Title
         </h1>
+        @WebSecurity.CurrentUserName
     </div>
     <div class="content">
         <div class="main">
@@ -38,23 +40,26 @@
     <div class="menu">
         <ul class="menu-admin">
             <li class="section-home">
-                <h3><a class="navicon-home" href="~/Components/Control/Default">Главная страница</a></h3>
+                <h3><a class="navicon-home @if(Request.Url.LocalPath == menulink[0]){<text>selected</text>}" href="~/Components/Control/Default">Главная страница</a></h3>
             </li>
             <li class="section-pages">
-                <h3><a class="navicon-pages" href="~/Components/Control/AllPages">Все страницы</a></h3>
+                <h3><a class="navicon-pages  @if(Request.Url.LocalPath == menulink[1]){<text>selected</text>}" href="~/Components/Control/AllPages">Все страницы</a></h3>
             </li>
             <li class="section-newpage">
-                <h3><a class="navicon-newpage" href="~/Components/Control/NewPage">Новая страница</a></h3>
+                <h3><a class="navicon-newpage @if(Request.Url.LocalPath == menulink[2]){<text>selected</text>}" href="~/Components/Control/NewPage">Новая страница</a></h3>
             </li>
             
             <li class="section-navigation">
-                <h3><a class="navicon-navigation" href="~/Components/Control/SiteMenu">Меню сайта</a></h3>
+                <h3><a class="navicon-navigation @if(Request.Url.LocalPath == menulink[3]){<text>selected</text>}" href="~/Components/Control/SiteMenu">Меню сайта</a></h3>
             </li>
             <li class="section-editor">
-                <h3><a class="navicon-editor" href="~/Components/Control/Editor">Редактор файлов</a></h3>
+                <h3><a class="navicon-editor @if(Request.Url.LocalPath == menulink[4]){<text>selected</text>}" href="~/Components/Control/Editor">Редактор файлов</a></h3>
             </li>
             <li class="section-settings">
-                <h3><a class="navicon-settings" href="~/Components/Control/Settings">Настройки</a></h3>
+                <h3><a class="navicon-settings @if(Request.Url.LocalPath == menulink[5]){<text>selected</text>}" href="~/Components/Control/Settings">Настройки</a></h3>
+            </li>
+            <li class="section-settings">
+                <h3><a class="navicon-settings @if(Request.Url.LocalPath == menulink[6]){<text>selected</text>}" href="~/Components/Control/UserSettings">Настройки аккаунта</a></h3>
             </li>
         </ul>
         <div style="height: 400px;"></div>

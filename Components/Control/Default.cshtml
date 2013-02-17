@@ -2,10 +2,10 @@
     Page.Title = "Панель управления"; 
 
     var db = Database.Open("Datebase");
-    var tipson = db.QuerySingle("SELECT * FROM Settings WHERE Id = @0", "11");
+    var tipson = db.QuerySingle("SELECT ControlTips FROM Settings WHERE Id = @0", 1);
     
 }
-@if(tipson.SetValue == "on"){
+@if(tipson.ControlTips == "on"){
 <div class="home-start">
     <h2 class="home-start-header">Начало работы:</h2>
     <div class="home-start-steps home-start-step1">

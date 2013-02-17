@@ -136,6 +136,10 @@ padding: .4em 0;
     color: #fff;
 }
 
+.selected{
+    color: #fff !important;
+}
+
 
 /* Pages */
 form ol{
