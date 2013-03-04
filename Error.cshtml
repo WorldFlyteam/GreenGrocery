@@ -19,39 +19,42 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@Page.Title</title>
-        <style>
-            body{
-                font-family:Verdana, sans-serif;
-            }
-            .page {
-                
-                width: 100%;
-            }
-            .t-no{
-                font-size: 200px;
-                font-family: 'Segoe UI Light', sans-serif;
-                font-weight: 200;
-                text-align: center;
-                white-space: nowrap;
-            }
-            .t-desc{
-                font-size: 40px;
-                font-family: 'Segoe UI Light', sans-serif;
-                font-weight: 200;
-            }
-        </style>
-    </head>
-    <body><div class="page">
+<head>
+    <meta charset="utf-8" />
+    <title>@Page.Title</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+        }
+
+        .page {
+            width: 100%;
+        }
+
+        .t-no {
+            font-size: 200px;
+            font-family: 'Segoe UI Light', sans-serif;
+            font-weight: 200;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .t-desc {
+            font-size: 40px;
+            font-family: 'Segoe UI Light', sans-serif;
+            font-weight: 200;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
         <p style="text-align: center;">
-        <span class="t-no">
-        No :(
-        </span><br/>
-        <span class="t-desc">@Page.Description</span>
+            <span class="t-no">Нет :(
+            </span>
+            <br />
+            <span class="t-desc">@Page.Description</span>
         </p>
-        
-        </div>
-    </body>
+
+    </div>
+</body>
 </html>

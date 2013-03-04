@@ -29,7 +29,7 @@
             }
         }
     }
-
+    var lastVisit = Request.Cookies["lastVisit"].Value;
 }
 @errorm
 <form action="" method="post">
@@ -69,3 +69,5 @@
         </tbody>
     </table>
 </form>
+
+Последнее посещение @lastVisit

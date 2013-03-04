@@ -5,6 +5,8 @@
     var forgeyvalid = true;
     var errorm = "";
 
+
+
     if(IsPost){
         AntiForgery.Validate();
         var username = Request["user"];
@@ -33,11 +35,11 @@
                 if (data!=null)
                 {
                     FormsAuthentication.RedirectFromLoginPage(username, false);
-                    var ReturnUrl = Request["ReturnUrl"];
+                    /*var ReturnUrl = Request["ReturnUrl"];
                     if(ReturnUrl.IsEmpty()){
-                        ReturnUrl = "/Components/Control";
+                        ReturnUrl = "/Components/Control/Default";
                     }
-                    Response.Redirect(ReturnUrl);
+                    Response.Redirect(ReturnUrl);*/
                 }
             } catch(Exception ex){
                 errorm = ex.Message.ToString();
@@ -49,73 +51,100 @@
 <!DOCTYPE html>
 
 <html lang="ru">
-    <head>
-        <meta charset="utf-8" />
-        <title>Вход - Ceres Project</title>
-    </head>
-    <body>
-    @if(WebSecurity.IsAuthenticated){
-        <text>
-            <h1>Вы уже вошли в систему</h1>
-        </text>
-        }else{
-        <text>
-        @errorm
-        @if(!forgeyvalid){
+<head>
+    <meta charset="utf-8" />
+    <title>Вход - Ceres Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Components/ui/css/bootstrap-login.min.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+        }
+
+        /* Lastly, apply responsive CSS fixes as necessary */
+        @@media (max-width: 767px) {
+            #footer {
+                margin-left: -20px;
+                margin-right: -20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+
+        .container {
+            width: auto;
+            max-width: 680px;
+        }
+
+            .container .credit {
+                margin: 20px 0;
+            }
+
+        .help-block {
+            color: #f00;
+        }
+
+        input {
+            width: 320px;
+        }
+    </style>
+    <link href="~/Components/Control/ui/css/bootstrap-responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        @if (WebSecurity.IsAuthenticated)
+        {
             <text>
-                Робот
+            <div class="page-header">
+                <h1>Вы уже вошли в систему</h1>
+
+            </div>
             </text>
         }
-        <form action="" method="post">
-            @AntiForgery.GetHtml()
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="table-label">
-                            <label for="user">Имя пользователя</label>
-                        </td>
-                        <td>
-                            <input type="text" name="user" id="user" class="input" value=""/>
-                            @if(!usernamevalid){
-                                <text>
-                                    Вы не ввели имя пользователя
-                                </text>
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-label">
-                            <label for="password">Пароль</label>
-                        </td>
-                        <td>
-                            <input type="password" name="password" id="password" class="input" value=""/>
-                            @if(!passwordvalid){
-                                <text>
-                                    Вы не ввели пароль
-                                </text>
-                            }
-                        </td>
-                    </tr>
-                <tr style="display: none;">
-                        <td class="table-label">
-                             <label for="email">Email</label>
-                        </td>
-                        <td>
-                            <input type="email" name="email" id="email" class="input" value=""/>
-                        </td>
-                    </tr>
-                <tr>
-                        <td class="table-label">
-                            <input type="submit" value="Отправить"/>
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-        </text>
-               }
-    </body>
+        else
+        {
+            <text>
+            <div class="page-header">
+                <h1>Вход
+                </h1>
+
+            </div>
+            @errorm
+            @if (!forgeyvalid)
+            {
+                <text>
+                Робот
+            </text>
+            }
+            <form action="" method="post" class="form-horizontal">
+                @AntiForgery.GetHtml()
+                <input type="email" name="email" id="email" style="display: none;" value="" />
+                <div class="control-group">
+                    <label class="control-label" for="user">Имя пользователя</label>
+                    <div class="controls">
+                        <input type="text" name="user" id="user" autocomplete="off" value="" />
+                        @if (!usernamevalid)
+                        {<text><span class="help-block">Вы не ввели имя пользователя</span></text>}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">Пароль</label>
+                    <div class="controls">
+                        <input type="password" name="password" id="password" value="" />
+                        @if (!passwordvalid)
+                        {<text><span class="help-block text-error">Вы не ввели пароль</span></text>}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn" type="submit">Войти</button>
+                    </div>
+                </div>
+            </form>
+            </text>
+        }
+    </div>
+</body>
 </html>

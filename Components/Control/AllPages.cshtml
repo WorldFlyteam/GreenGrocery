@@ -24,9 +24,9 @@
 <p>Все доступные страницы</p>
         @grid.GetHtml(
                 tableStyle: "Grid",
-                headerStyle: "grid-head",
+                headerStyle: "b-grid-head",
                 //alternatingRowStyle: "alt",
-                footerStyle: "grid-pgr",
+                footerStyle: "b-grid-pgr",
                 columns: grid.Columns(
                     grid.Column(format: @<a href="PageEdit?id=@item.Id"  class="grid-ctrl-ico grid-con" title="Редактирование страницы" >✏</a>),
                     

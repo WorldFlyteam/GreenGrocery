@@ -1,0 +1,22 @@
+﻿body {
+    font-family: 'Segoe UI Light', Verdana, Arial, sans-serif;
+    font-weight:100;
+}
+
+.b-page {
+    width: 100%;
+}
+
+.b-page-text {
+    text-align:center;
+    white-space: nowrap;
+}
+
+.b-page-text-h1 {
+    font-size: 200px;
+    display:block;
+}
+
+.b-page-text-h2 {
+    font-size: 40px;
+}
