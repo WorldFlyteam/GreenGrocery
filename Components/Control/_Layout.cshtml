@@ -1,11 +1,12 @@
 ﻿@{
-    
+    // Adding cookie 
     HttpCookie aCookie = new HttpCookie("lastVisit");
     aCookie.Value = DateTime.Now.ToString();
     aCookie.Expires = DateTime.Now.AddMonths(3);
     Response.Cookies.Add(aCookie);
 
-    var menulink = new string[7] {"/Components/Control/Default", "/Components/Control/AllPages", "/Components/Control/NewPage", "/Components/Control/SiteMenu", "/Components/Control/Editor", "/Components/Control/Settings", "/Components/Control/UserSettings"};
+
+    var menulink = new string[7] {"/Components/Control/Default", "/Components/Control/AllPages", "/Components/Control/NewPage", "/Components/Control/SiteMenu", "/Components/Control/Editor", "/Components/Control/Settings", "/Components/Control/UserSettings"};  // Array with the page address
 }
 
 <!DOCTYPE html>

@@ -37,13 +37,10 @@ a:focus{outline:none;}
 .i-header-name-text{
     padding: 14px 0 0 260px;
     text-shadow: rgba(0,0,0,.1) 0px 0px 1px;
-    background: -webkit-linear-gradient(#464646, #000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .b-header-logo{
-     background: #323232;
+    background: #323232;
     width: 240px;
     height: 50px;
     float: left;
