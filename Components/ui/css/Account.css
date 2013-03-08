@@ -1,0 +1,49 @@
+body {
+    font-family:'Segoe UI', Verdana, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    margin: 0;
+    color: #000;
+    
+}
+
+.b-page {
+    max-width: 600px;
+    text-align: center;
+}
+
+.b-page-header {
+    border-bottom: 1px dashed #e8e8e8;
+    margin-bottom:15px;
+}
+
+.i-page-header {
+    font-size: 40px;
+    line-height: 15px;
+    font-family:'Segoe UI Light', Verdana, Helvetica, Arial, sans-serif;
+    font-weight:200;
+}
+
+.b-form-table-lable {
+    text-align: right;
+    width:180px;
+    vertical-align:top;
+}
+
+.b-form-table-input {
+    width: 400px;
+    text-align:left;
+    vertical-align:top;
+}
+
+.i-form-input {
+    width: 260px;
+}
+
+.i-form-email {
+    display: none !important;
+}
+
+.i-form-error {
+    color: red;
+}

@@ -7,32 +7,38 @@
 
 
 
-    if(IsPost){
+    if (IsPost)
+    {
         AntiForgery.Validate();
         var username = Request["user"];
-        if(username.IsEmpty()){
+        if (username.IsEmpty())
+        {
             usernamevalid = false;
             IsValid = false;
         }
 
         var password = Request["password"];
-        if(password.IsEmpty()){
+        if (password.IsEmpty())
+        {
             passwordvalid = false;
             IsValid = false;
         }
 
         var forgeyinput = Request["name"];
-        if(!forgeyinput.IsEmpty()){
+        if (!forgeyinput.IsEmpty())
+        {
             forgeyvalid = false;
             IsValid = false;
         }
 
-        if(IsValid){
+        if (IsValid)
+        {
             var db = Database.Open("Datebase");
 
-            try{
+            try
+            {
                 var data = db.QuerySingle("Select * from Account where UserName=@0 and Password=@1", username, password);
-                if (data!=null)
+                if (data != null)
                 {
                     FormsAuthentication.RedirectFromLoginPage(username, false);
                     /*var ReturnUrl = Request["ReturnUrl"];
@@ -41,7 +47,9 @@
                     }
                     Response.Redirect(ReturnUrl);*/
                 }
-            } catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 errorm = ex.Message.ToString();
             }
         }
@@ -55,96 +63,71 @@
     <meta charset="utf-8" />
     <title>Вход - Ceres Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Components/ui/css/bootstrap-login.min.css" rel="stylesheet" />
-    <style>
-        html,
-        body {
-            height: 100%;
-            /* The html and body elements cannot have any padding or margin. */
-        }
-
-        /* Lastly, apply responsive CSS fixes as necessary */
-        @@media (max-width: 767px) {
-            #footer {
-                margin-left: -20px;
-                margin-right: -20px;
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-
-        .container {
-            width: auto;
-            max-width: 680px;
-        }
-
-            .container .credit {
-                margin: 20px 0;
-            }
-
-        .help-block {
-            color: #f00;
-        }
-
-        input {
-            width: 320px;
-        }
-    </style>
-    <link href="~/Components/Control/ui/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="~/Components/ui/css/Account.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
+    <div class="b-page">
         @if (WebSecurity.IsAuthenticated)
         {
-            <text>
-            <div class="page-header">
-                <h1>Вы уже вошли в систему</h1>
+            
 
+
+            <div class="b-page-header">
+                <h1 class="i-page-header">Вы уже авторизованы
+                </h1>
             </div>
-            </text>
+            
         }
         else
         {
-            <text>
-            <div class="page-header">
-                <h1>Вход
-                </h1>
 
+            <div class="b-page-header">
+                <h1 class="i-page-header">Вход</h1>
             </div>
-            @errorm
-            @if (!forgeyvalid)
-            {
-                <text>
-                Робот
-            </text>
-            }
-            <form action="" method="post" class="form-horizontal">
-                @AntiForgery.GetHtml()
-                <input type="email" name="email" id="email" style="display: none;" value="" />
-                <div class="control-group">
-                    <label class="control-label" for="user">Имя пользователя</label>
-                    <div class="controls">
-                        <input type="text" name="user" id="user" autocomplete="off" value="" />
-                        @if (!usernamevalid)
-                        {<text><span class="help-block">Вы не ввели имя пользователя</span></text>}
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="password">Пароль</label>
-                    <div class="controls">
-                        <input type="password" name="password" id="password" value="" />
-                        @if (!passwordvalid)
-                        {<text><span class="help-block text-error">Вы не ввели пароль</span></text>}
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button class="btn" type="submit">Войти</button>
-                    </div>
-                </div>
-            </form>
-            </text>
+
+            <div class="b-page-main">
+                @errorm
+                @if (!forgeyvalid)
+                {<text>Робот</text>}
+
+                <form action="" method="post">
+                    @AntiForgery.GetHtml()
+                    <input type="Email" name="Email" class="i-form-email" id="Email" value="" />
+                    <table>
+                        <tr>
+                            <td class="b-form-table-lable">
+                                <label for="User">Имя пользователя</label>
+                            </td>
+                            <td class="b-form-table-input">
+                                <input type="text" name="User" id="User" autocomplete="off" value="" class="i-form-input" />
+                                @if (!usernamevalid)
+                                {<text><span class="i-form-error">Вы не ввели имя пользователя</span></text>}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="b-form-table-lable">
+                                <label for="Password">Пароль</label>
+                            </td>
+                            <td class="b-form-table-input">
+                                <input type="password" name="Password" id="Password" value="" class="i-form-input" />
+                                @if (!passwordvalid)
+                                {<text><span class="i-form-error">Вы не ввели пароль</span></text>}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="b-form-table-lable">
+                                <button type="submit">Войти</button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+            </div>
+   
+
+
         }
     </div>
+
 </body>
 </html>
