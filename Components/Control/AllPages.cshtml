@@ -3,10 +3,10 @@
     var hashcode = Request.GetHashCode();  
     var db = Database.Open("Datebase");
 
-    var deletepage = Request["deletepage"];
+    var deletepage = Request["DeletePage"];
     if(deletepage == "true"){
         
-        var deleteitemid = Request["itemid"];
+        var deleteitemid = Request["ItemId"];
         
         
         db.Execute("delete from Pages where Id=@0", deleteitemid);
@@ -40,4 +40,4 @@
 
 
 
-<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?deletepage=true&itemid=" + id + "&hash=" + @hashcode;}return false;}</script>
+<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?DeletePage=true&ItemId=" + id + "&hash=" + @hashcode;}return false;}</script>

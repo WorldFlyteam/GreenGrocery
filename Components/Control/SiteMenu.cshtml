@@ -13,10 +13,10 @@ var hashcode = Request.GetHashCode();
 
     var db = Database.Open("Datebase");
 
-    var deletepage = Request["deletemenuitem"];
+    var deletepage = Request["DeleteMenuItem"];
     if(deletepage == "true"){
         
-        var deleteitemid = Request["itemid"];
+        var deleteitemid = Request["ItemId"];
         
         
             db.Execute("delete from SiteMenu where Id=@0", deleteitemid);
@@ -209,4 +209,4 @@ var hashcode = Request.GetHashCode();
                             )
 
 
-<script>function itemdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "SiteMenu.cshtml?deletemenuitem=true&itemid=" + id + "&hash=" + @hashcode;}return false;}</script>
+<script>function itemdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "SiteMenu.cshtml?DeleteMenuItem=true&ItemId=" + id + "&hash=" + @hashcode;}return false;}</script>

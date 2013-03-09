@@ -5,6 +5,7 @@
 
     var dmetavalue = "";
     var dstatvalue = "";
+    var djslibvalue = "";
     var errorm = "";
 
 
@@ -20,6 +21,15 @@
         dstatvalue = " checked=\"checked\" ";
     } else {
         dstatvalue = "";
+    }
+
+    if (data.JSLib == "on")
+    {
+        djslibvalue = " checked=\"checked\" ";
+    }
+    else
+    {
+        djslibvalue = "";
     }
 
     if(IsPost){
@@ -49,8 +59,10 @@
 
         var sitestatcode = Request.Unvalidated("sitestatcode");
 
+        var jslib = Request["jslib"];
+
         try{
-            db.Execute("UPDATE Settings SET SiteName=@0, SiteLang=@1, PageNameSep=@2, SiteMeta=@3, SiteKeywords=@4, SiteStat=@5, SiteStatCode=@6 WHERE Id=@7", sitename, sitelang, pagesepr, sitemeta, sitekeyw, sitestat, sitestatcode, 1);
+            db.Execute("UPDATE Settings SET SiteName=@0, SiteLang=@1, PageNameSep=@2, SiteMeta=@3, SiteKeywords=@4, SiteStat=@5, SiteStatCode=@6, jslib=@7 WHERE Id=@8", sitename, sitelang, pagesepr, sitemeta, sitekeyw, sitestat, sitestatcode, jslib, 1);
                         
             Response.Redirect("~/Components/Control/Settings");
         } catch (Exception ex){
@@ -149,6 +161,17 @@
                 </td>
                 <td>
                     <input id="keywords" class="input" type="text"  name="keywords" value="@data.SiteKeywords"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="b-table-label">
+                    <label for="jslib">Общая JavaScript библиотека:</label>
+                </td>
+                <td>
+                    <input class="meta" id="jslib" type="checkbox" @Html.Raw(djslibvalue) name="jslib"/>
+            @if(data.JSLib == "on"){
+            <span class="i-text-tiny">← После отключения сайт может работать некорректно</span>
+            } 
                 </td>
             </tr>
         <tr>

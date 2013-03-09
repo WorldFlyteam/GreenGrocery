@@ -26,7 +26,7 @@
     <body>
         @RenderBody()
 
-
+        @if(data.JSLib == "no"){<script src="~/Components/ui/js/All.js"></script>}
 
        @Html.Raw(data.SiteStatCode)
         @if(data.SiteStat == "on"){
