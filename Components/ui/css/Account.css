@@ -4,7 +4,7 @@ body {
     width: 100%;
     margin: 0;
     color: #000;
-    
+    background:#fff;
 }
 
 .b-page {
@@ -20,7 +20,7 @@ body {
 .i-page-header {
     font-size: 40px;
     line-height: 15px;
-    font-family:'Segoe UI Light', Verdana, Helvetica, Arial, sans-serif;
+    
     font-weight:200;
 }
 
@@ -42,6 +42,11 @@ body {
 
 .i-form-email {
     display: none !important;
+}
+
+.i-page-error {
+    color: red;
+    font-size:20px;
 }
 
 .i-form-error {

@@ -47,13 +47,19 @@
                     }
                     Response.Redirect(ReturnUrl);*/
                 }
+                
+                if(data == null){
+                    errorm = "Неправильное имя пользователя или пароль";
+                }
             }
             catch (Exception ex)
             {
-                errorm = ex.Message.ToString();
+                errorm += ex.Message.ToString();
             }
         }
     }
+    
+    
 }
 
 <!DOCTYPE html>
@@ -86,9 +92,10 @@
             </div>
 
             <div class="b-page-main">
-                @errorm
+                <span class="i-page-error">@errorm</span>
                 @if (!forgeyvalid)
-                {<text>Робот</text>}
+                {<text><span class="i-page-error">Робот</span></text>}
+                
 
                 <form action="" method="post">
                     @AntiForgery.GetHtml()
