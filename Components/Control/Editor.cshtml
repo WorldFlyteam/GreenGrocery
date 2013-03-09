@@ -1,109 +1,175 @@
 ﻿@{
 
-    Page.Title = "Edit layout & CSS files";
+    Page.Title = "Редактор файлов";
 
-    var pMasterPage=Request["pMasterPage"];
-    
-    var fileToEdit=Request["fileToEdit"];
-    var fileContent=Request.Unvalidated("fileContent");
+    var pMasterPage = Request["pMasterPage"];
+
+    var fileToEdit = Request["fileToEdit"];
+    var fileContent = Request.Unvalidated("fileContent");
 
     var errMSG = "";
-       
-    
+
+
     //List all Layout files
-    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/Components/Layouts"));  
+    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/Components/Layouts"));
     FileInfo[] fileInfo = dirInfo.GetFiles("_*.cshtml", SearchOption.TopDirectoryOnly);
-    
-    if (pMasterPage.IsEmpty()){
-    pMasterPage=fileInfo[0].Name.ToString();
+
+    //Lis all css files
+    DirectoryInfo dirInfostyle = new DirectoryInfo(Server.MapPath("~/Components/ui/css"));
+    FileInfo[] fileInfostyle = dirInfostyle.GetFiles("*.css", SearchOption.TopDirectoryOnly);
+
+    //Lis all JavaScript files
+    DirectoryInfo dirInfoscript = new DirectoryInfo(Server.MapPath("~/Components/ui/js"));
+    FileInfo[] fileInfoscript = dirInfoscript.GetFiles("*.js", SearchOption.TopDirectoryOnly);
+
+    if (pMasterPage.IsEmpty())
+    {
+        pMasterPage = fileInfo[0].Name.ToString();
     }
 
-    //List all css files for selected layout
-    FileInfo[] fileInfoCSS=null ;
-    //some layout files may not have unique folders with the files
-    try{
-    DirectoryInfo dirInfoCSS = new DirectoryInfo(Server.MapPath("~/Components/Layouts/" + Functions.CleanRCNames(pMasterPage)));  
-    fileInfoCSS = dirInfoCSS.GetFiles("*.css", SearchOption.AllDirectories);
-    }catch{}
-    
-       
-    if (IsPost){
+
+
+    if (IsPost)
+    {
         AntiForgery.Validate();
-        if(!fileContent.IsEmpty() && !fileToEdit.IsEmpty() && fileToEdit.Contains("Components/Layouts")){
-            try {
-            System.IO.File.WriteAllText(fileToEdit,fileContent);
-            errMSG="File updated";
-            }catch(Exception ex){
-                errMSG=ex.ToString();
-                }
+        if (!fileContent.IsEmpty() && !fileToEdit.IsEmpty())
+        {
+            try
+            {
+                System.IO.File.WriteAllText(fileToEdit, fileContent);
+                errMSG = "File updated";
+            }
+            catch (Exception ex)
+            {
+                errMSG = ex.ToString();
+            }
         }
-    }else{
-    if (!fileToEdit.IsEmpty() && fileToEdit.Contains("Components/Layouts")){
-    fileContent= System.IO.File.ReadAllText(fileToEdit);
     }
- }
+    else
+    {
+        if (!fileToEdit.IsEmpty())
+        {
+            fileContent = System.IO.File.ReadAllText(fileToEdit);
+        }
+    }
   
     
 }
+@section Head{
+    <link href="~/Components/CodeMirror/codemirror.css" rel="stylesheet" />
+    <link href="~/Components/CodeMirror/theme/eclipse.css" rel="stylesheet" />
+        <script src="~/Components/CodeMirror/codemirror.js"></script>
 
+    @if(Request["mode"] == "html"){
+        <script src="~/Components/CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    }
+    @if(Request["mode"] == "css"){
+        <script src="~/Components/CodeMirror/mode/css/css.js"></script>
+    }
+    @if(Request["mode"] == "js"){
+        <script src="~/Components/CodeMirror/mode/javascript/javascript.js"></script>
+    }
 
-<script type="text/javascript">
-    $(document).ready(function(){
+    <style>
+        .CodeMirror {
+            background: #fff !important;
+            border: 1px solid #efefef !important;
+            max-width:900px;
+        }
+    </style>
+}
 
-        $("#pMasterPage").change(function(){
-        $("#selectLayout").submit();
-        });
+<h2>Не изменяйте файлы, если не знаете что делаете</h2>
 
-        });
-</script>
 <form name="selectLayout" id="selectLayout" method="get" action="">
- 
-
-        @errMSG
-        <ol>
-            <li>
-                <select id="pMasterPage" name="pMasterPage">
-               @foreach (var f in fileInfo )
-               {
-                <option value="@f.Name" @if(pMasterPage==f.Name){<text>selected="selected"</text>}>@Functions.CleanRCNames(f.Name)</option>
-                }
-                </select> <img src="images/help.gif" alt="help" title="All layouts are in rcLayouts folder - you can change/modify them to fit your needs" />
-            </li>
-            <li>Layout file: <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" +@Server.MapPath("~/Components/Layouts/") +@pMasterPage +"&pMasterPage=" +@pMasterPage)">@pMasterPage</a></li>
-            <li>CSS file(s):
-                @if (fileInfoCSS!=null){
-                    foreach (var f in fileInfoCSS ){
-               <text> <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" +@f.DirectoryName +"/"  +@f.Name +"&pMasterPage=" +@pMasterPage)">@f.Name</a> , </text>  
-                    }
-                }
-            </li>
-        </ol>
-
-    </form>
 
 
-    <form name="fileEdit" id="fileEdit"  method="post" action="">
-        @AntiForgery.GetHtml()
-    
-     
-<textarea name="fileContent" rows="30" cols="90">@fileContent</textarea>
-              <p class="form-actions">
-            <input type="submit" class="btn" value="Update" title="Update" />
-        </p>
-         <script>
+    @errMSG
+    <dl>
+        <dt>Макеты</dt>
+            @foreach (var f in fileInfo) {
+                <dd>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/") + @pMasterPage + "&pMasterPage=" + @f.Name + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
+                </dd>
+            }
+        <dt>Стили</dt>
+            @foreach (var fs in fileInfostyle) {
+                <dd>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&pMasterPage=" + @pMasterPage + "&mode=css")">@fs.Name</a>
+                </dd>
+            }
+        <dt>Пользовательские скрипты</dt>
+            @foreach (var fj in fileInfoscript) {
+                <dd>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&pMasterPage=" + @pMasterPage + "&mode=js")">@fj.Name</a>
+                </dd>
+            }
+    </dl>
+                
 
-     document.onkeydown = function (e) {
-         e = e || event;
+</form>
 
 
-         if ((e.ctrlKey && e.keyCode == 'S'.charCodeAt(0))) {
-             save();
-             return false;
-         }
-     }
-     function save() {
-         document.getElementsById("fileEdit").submit();
-         
-     }
+<form name="fileEdit" id="fileEdit" method="post" action="">
+    @AntiForgery.GetHtml()
 
-         </script></form>
+
+    <textarea id="code" class="i-form-editor" name="fileContent">@fileContent</textarea>
+    <p class="form-actions">
+        <input type="submit" class="btn" value="Update" title="Update" />
+    </p>
+    <script>
+
+        document.onkeydown = function (e) {
+            e = e || event;
+
+
+            if ((e.ctrlKey && e.keyCode == 'S'.charCodeAt(0))) {
+                save();
+                return false;
+            }
+        }
+        function save() {
+            document.getElementsById("fileEdit").submit();
+
+        }
+
+    </script>
+</form>
+
+@if(Request["mode"] == "html"){
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                mode: "text/html",
+                indentUnit: 4,
+                indentWithTabs: true,
+                enterMode: "keep",
+                tabMode: "shift"
+            });
+    </script>
+}
+    @if(Request["mode"] == "css"){
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                mode: "text/css",
+                indentUnit: 4,
+                indentWithTabs: true,
+                enterMode: "keep",
+                tabMode: "shift"
+            });
+    </script>
+    }
+    @if(Request["mode"] == "js"){
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                mode: "text/javascript",
+                indentUnit: 4,
+                indentWithTabs: true,
+                enterMode: "keep",
+                tabMode: "shift"
+            });
+    </script>
+    }
