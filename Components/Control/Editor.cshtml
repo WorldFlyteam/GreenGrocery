@@ -58,15 +58,19 @@
 @section Head{
     <link href="~/Components/CodeMirror/codemirror.css" rel="stylesheet" />
     <link href="~/Components/CodeMirror/theme/eclipse.css" rel="stylesheet" />
-        <script src="~/Components/CodeMirror/codemirror.js"></script>
+    <script src="~/Components/CodeMirror/codemirror.js"></script>
 
     @if(Request["mode"] == "html"){
-        <script src="~/Components/CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+        
+        <script src="~/Components/CodeMirror/mode/xml/xml.js"></script>
+         
     }
-    @if(Request["mode"] == "css"){
+    @if (Request["mode"] == "css")
+    {
         <script src="~/Components/CodeMirror/mode/css/css.js"></script>
     }
-    @if(Request["mode"] == "js"){
+    @if (Request["mode"] == "js")
+    {
         <script src="~/Components/CodeMirror/mode/javascript/javascript.js"></script>
     }
 
@@ -87,21 +91,24 @@
     @errMSG
     <dl>
         <dt>Макеты</dt>
-            @foreach (var f in fileInfo) {
+            @foreach (var f in fileInfo)
+            {
                 <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/") + @pMasterPage + "&pMasterPage=" + @f.Name + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/")+ @f.Name + "&pMasterPage=" + @pMasterPage + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
                 </dd>
             }
         <dt>Стили</dt>
-            @foreach (var fs in fileInfostyle) {
+            @foreach (var fs in fileInfostyle)
+            {
                 <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&pMasterPage=" + @pMasterPage + "&mode=css")">@fs.Name</a>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&mode=css")">@fs.Name</a>
                 </dd>
             }
         <dt>Пользовательские скрипты</dt>
-            @foreach (var fj in fileInfoscript) {
+            @foreach (var fj in fileInfoscript)
+            {
                 <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&pMasterPage=" + @pMasterPage + "&mode=js")">@fj.Name</a>
+                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&mode=js")">@fj.Name</a>
                 </dd>
             }
     </dl>
@@ -137,19 +144,17 @@
     </script>
 </form>
 
-@if(Request["mode"] == "html"){
+@if (Request["mode"] == "html")
+{
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                lineNumbers: true,
-                mode: "text/html",
-                indentUnit: 4,
-                indentWithTabs: true,
-                enterMode: "keep",
-                tabMode: "shift"
+                mode: { name: "xml", alignCDATA: true },
+                lineNumbers: true
             });
     </script>
 }
-    @if(Request["mode"] == "css"){
+    @if (Request["mode"] == "css")
+    {
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,
@@ -161,7 +166,8 @@
             });
     </script>
     }
-    @if(Request["mode"] == "js"){
+    @if (Request["mode"] == "js")
+    {
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,

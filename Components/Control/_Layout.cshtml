@@ -72,13 +72,10 @@
                                                                      {<text>selected</text>}" href="~/Components/Control/Editor">Редактор файлов</a>
                 </li>
                 <li class="b-nav-menu-item i-nav-menu-settings">
-                    <a class="i-nav-menu-settings-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[5])
+                    <a class="i-nav-menu-settings-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[5] || Request.Url.LocalPath == menulink[6])
                                                                        {<text>selected</text>}" href="~/Components/Control/Settings">Настройки</a>
                 </li>
-                <li class="b-nav-menu-item i-nav-menu-settings">
-                    <a class="i-nav-menu-settings-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[6])
-                                                                       {<text>selected</text>}" href="~/Components/Control/UserSettings">Настройки аккаунта</a>
-                </li>
+                
             </ul>
             <div style="height: 400px;"></div>
         </div>
