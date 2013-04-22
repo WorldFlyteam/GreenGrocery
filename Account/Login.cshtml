@@ -5,7 +5,7 @@
     var forgeyvalid = true;
     var errorm = "";
 
-
+    
 
     if (IsPost)
     {
@@ -40,12 +40,26 @@
                 var data = db.QuerySingle("Select * from Account where UserName=@0 and Password=@1", username, password);
                 if (data != null)
                 {
-                    FormsAuthentication.RedirectFromLoginPage(username, false);
-                    /*var ReturnUrl = Request["ReturnUrl"];
-                    if(ReturnUrl.IsEmpty()){
-                        ReturnUrl = "/Components/Control/Default";
+
+                    var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                    if(ip == null || ip.IsEmpty()){
+                        ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                     }
-                    Response.Redirect(ReturnUrl);*/
+
+                    var time = DateTime.Now.ToString();
+
+                    var browser = Request.Browser.Browser;
+                    
+                    
+                    db.Execute("INSERT INTO Visits (Ip, Login, LastVisit, Browser) VALUES (@0, @1, @1, @2)", ip.ToString(), time, browser);
+
+                    HttpCookie aCookie = new HttpCookie("lastVisit");
+                    aCookie.Value = DateTime.Now.ToString();
+                    aCookie.Expires = DateTime.Now.AddMonths(3);
+                    Response.Cookies.Add(aCookie);
+                    
+                    FormsAuthentication.RedirectFromLoginPage(username, false);
+                    
                 }
                 
                 if(data == null){
@@ -61,7 +75,7 @@
     
     
 }
-
+ 
 <!DOCTYPE html>
 
 <html lang="ru">
@@ -72,6 +86,7 @@
     <link href="~/Components/ui/css/Account.css" rel="stylesheet" />
 </head>
 <body>
+    
     <div class="b-page">
         @if (WebSecurity.IsAuthenticated)
         {

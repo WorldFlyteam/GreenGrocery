@@ -1,0 +1,216 @@
+﻿body {
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #000;
+}
+
+a {
+    color: #f00;
+}
+
+    a:hover {
+        color: #000;
+    }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: normal;
+   
+}
+h2 {
+    font-size: 24px;
+    color: #ff7d00;
+}
+
+
+.b-header {
+    text-align: center;
+    position: relative;
+    padding-bottom: 24px;
+    padding-top: 10px;
+}
+
+    .b-header .logo {
+        margin: 10px auto;
+        background: url(/Components/ui/images/control/fetus-cp-logo.png) no-repeat;
+        display: block;
+        width: 308px;
+        height: 170px;
+    }
+
+    @media (-webkit-min-device-pixel-ratio:2),
+       (min--moz-device-pixel-ratio:2),
+       (-o-min-device-pixel-ratio:2/1),
+       (min-resolution:2dppx) {
+       .b-header .logo {
+            
+            background: url(/Components/ui/images/control/fetus-cp-logo@2.png) no-repeat 50%;
+            background-size: 308px;
+        }
+       }
+
+
+.b-header-account {
+    position: absolute;
+    right: 0;
+    top: 19px;
+    width: 30%;
+}
+
+.b-header-menu {
+    text-align: left;
+    font-size: 30px;
+    font-family: Verdana,sans-serif;
+    padding-top: 15px;
+    overflow: hidden;
+}
+
+    .b-header-menu a {
+        margin-right: 24px;
+        display: block;
+        float: left;
+        color: #FF7400;
+    }
+
+        .b-header-menu a:hover {
+            color: #dd6500;
+        }
+
+        .b-header-menu a.active {
+            text-decoration: none;
+            color: #000;
+        }
+
+
+
+.b-layout {
+    margin: 0 auto;
+    width: 1200px;
+    min-width: 600px;
+    text-align: left;
+}
+
+
+
+
+
+
+@media (max-width: 1300px) {
+    .b-layout {
+        width: 1130px;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    .b-layout {
+        width: 1030px;
+    }
+
+    .b-header-menu {
+        font-size: 26px;
+    }
+
+        .b-header-menu a {
+            margin-right: 15px;
+        }
+}
+
+@media (max-width: 1100px) {
+    .b-layout {
+        width: 950px;
+    }
+
+    .b-header-menu {
+        font-size: 26px;
+    }
+}
+
+
+.submenu {
+}
+
+    .submenu tr td {
+        text-align: center;
+        white-space: nowrap;
+        line-height: 19px;
+    }
+
+        .submenu tr td.active a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .submenu tr td a {
+            display: block;
+            padding: 0px 15px;
+            padding-top: 7px;
+            padding-bottom: 0px;
+            height: 28px;
+            font-size: 16px;
+            background: #efefef;
+            -webkit-border-top-left-radius: 10px;
+            -webkit-border-top-right-radius: 10px;
+            -moz-border-radius-topleft: 10px;
+            -moz-border-radius-topright: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+
+.b-form-item {
+    margin-bottom: 20px;
+}
+.b-form-item label {
+    display: block;
+    font-weight:bold;
+    font-family:Arial, sans-serif;
+}
+
+.b-form-item input[type="text"],
+.b-form-item input[type="password"],
+.b-form-item input[type="email"] {
+    height:22px;
+    width: 80%;
+    min-width: 580px;
+    font-size:14px;
+    text-indent:5px;
+    display:block;
+    font-family:Arial, sans-serif;
+}
+
+.b-form-item textarea {
+    width: 80%;
+    height:175px;
+    min-width: 580px;
+    font-size: 14px;
+    text-indent: 5px;
+    display: block;
+    font-family:Arial, sans-serif;
+}
+
+.b-footer {
+    border-top: 1px solid rgb(229,229,229);
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding:0 15px 0 15px;
+}
+
+.b-footer-section {
+    float: left;
+    
+}
+
+.error {
+    color: #f00;
+}
+
+.description {
+    color: #808080;
+    font-size: 0.85em;
+}

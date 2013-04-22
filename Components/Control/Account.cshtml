@@ -1,0 +1,244 @@
+﻿@{
+    Page.Title = "Настроки акаунта";
+    var UserName = WebSecurity.CurrentUserName;
+
+    var db = Database.Open("Datebase");
+
+    var data = db.QuerySingle("SELECT * FROM Account WHERE UserName = @0", UserName);
+    //var sqlreqests = new string[3] {"SELECT ", "2"};
+    var IsValid = true;
+    var errorm = "";
+    var form = Request["formid"];
+
+
+    if (IsPost)
+    {
+
+        if (form == "identity")
+        {
+            AntiForgery.Validate();
+            var Name = Request["Name"];
+            var Email = Request["Email"];
+
+            if (IsValid)
+            {
+                try
+                {
+                    db.Execute("UPDATE Account SET Name=@0, Email=@1 WHERE UserName=@2", Name, Email, UserName);
+                    Response.Redirect("Account");
+                }
+                catch (Exception ex)
+                {
+                    errorm = ex.Message.ToString();
+                }
+
+            }
+
+        }
+        if (form == "password")
+        {
+            AntiForgery.Validate();
+            var OldPassword = Request["OldPassword"];
+            if (OldPassword.IsEmpty() || OldPassword != data.Password)
+            {
+                IsValid = false;
+            }
+
+            var NewPassword = Request["NewPassword"];
+            if (NewPassword.IsEmpty())
+            {
+                IsValid = false;
+            }
+
+            var PasswordConf = Request["PasswordConf"];
+            if (PasswordConf.IsEmpty() || PasswordConf != NewPassword)
+            {
+                IsValid = false;
+            }
+
+            if (IsValid)
+            {
+                try
+                {
+                    db.Execute("UPDATE Account SET Password=@0 WHERE UserName=@1", NewPassword, UserName);
+                    Response.Redirect("Account");
+                }
+                catch (Exception ex)
+                {
+                    errorm = ex.Message.ToString();
+                }
+
+            } else{
+                errorm += "Введите данные снова";
+            }
+
+        }
+    }
+    var lastVisit = Request.Cookies["lastVisit"].Value;
+    
+}
+@section SubMenu{
+    <table class="submenu">
+        <tr>
+            <td class="active">
+                <a href="~/Components/Control/Account">Настройки</a>
+            </td>
+            <td>
+                <a href="~/Components/Control/Visits">Посещения</a>
+            </td>
+        </tr>
+    </table>
+}
+
+
+
+@if(!errorm.IsEmpty() || IsValid != true){
+    <script>
+        $(function ($) {
+            $.jGrowl('Произошла ошибка');
+            $.jGrowl('@errorm');
+        })
+    </script>
+}
+
+
+
+<h2>Личные данные</h2>
+<form id="c-form-usersettings-personal" action="" method="post">
+    @AntiForgery.GetHtml()
+    <input type="hidden" name="formid" value="identity" />
+
+    <div class="b-form-item required">
+        <label for="Name">Ваше имя:</label>
+        <input id="Name" class="input" type="text" name="Name" value="@data.Name"/>
+        <span style="display:none;" class="error error-name"></span>
+    </div>
+    <div class="b-form-item required">
+        <label for="Email">Адрес электронной почты:</label>
+        <input id="Email" class="input" type="email" name="Email" value="@data.Email"/>
+        <span style="display:none;" class="error error-email"></span>
+    </div>
+    <div class="b-form-button">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+</form>
+<h2>Пароль</h2>
+<form id="c-form-usersettings-password" name="passwords" action="" method="post">
+    @AntiForgery.GetHtml()
+    <input type="hidden" name="formid" value="password" />
+
+    <div class="b-form-item required">
+        <label for="Password">Старый пароль:</label>
+        <input id="Password" class="input" type="password" name="OldPassword" value="" />
+
+                            <span style="display:none;" class="error error-oldpassword"></span>
+    </div>
+    <div class="b-form-item required">
+        <label for="NewPassword">Новый пароль:</label>
+        <input id="NewPassword" class="input" type="password" name="NewPassword" value="" />
+                    
+                            <span style="display:none;" class="error error-newpassword"></span>
+    </div><div class="b-form-item required">
+        <label for="PasswordConf">Повторите пароль:</label>
+        <input id="PasswordConf" class="input" type="password" name="PasswordConf" value="" />
+                    
+                            <span style="display:none;" class="error error-passwordconf"></span>
+    </div>
+    <div class="b-form-button">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+    
+</form>
+
+
+
+Последнее посещение @lastVisit
+
+@HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]
+@HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]
+
+ 
+<script>
+    //Валидация полей формы
+    var errortext = "Поле обязательно для заполнения";
+    var IsValidper = false;
+    var IsValidpas = false;
+    $(function ($) {
+
+        /*$('#Name').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-name").show().text(errortext);
+                IsValidper = false;
+            } else {
+                $(".error-name").hide();
+                IsValidper = true;
+            }
+        });
+
+        $('#Email').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-email").show().text(errortext);
+                IsValidper = false;
+            } else {
+                $(".error-email").hide();
+                IsValidper = true;
+            }
+        });*/
+
+        //Поле OldPassword
+        $('#Password').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-oldpassword").show().text(errortext);
+                IsValidpas = false;
+            } else {
+                $(".error-oldpassword").hide();
+                IsValidpas = true;
+            }
+        });
+
+        $('#NewPassword').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-newpassword").show().text(errortext);
+                IsValidpas = false;
+            } else {
+                $(".error-newpassword").hide();
+                IsValidpas = true;
+            }
+        });
+
+        $('#PasswordConf').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-passwordconf").show().text(errortext);
+                IsValidpas = false;
+            } else {
+                $(".error-passwordconf").hide();
+                IsValidpas = true;
+            }
+        });
+
+        //var formper = document.getElementById("c-form-usersettings-personal");
+        var formpas = document.getElementById("c-form-usersettings-password");
+
+        /*formper.onsubmit = function () {
+            if (!IsValidper) {
+                $.jGrowl('Заполните все поля формы');
+                return false;
+            }
+        };*/
+
+        formpas.onsubmit = function () {
+            if (!IsValidpas) {
+                $.jGrowl('Заполните все поля формы');
+                return false;
+            }
+        };
+        
+    })
+</script>

@@ -1,0 +1,36 @@
+﻿@{
+    Page.Title = "Визиты";
+
+    var db = Database.Open("Datebase");
+    var data = db.Query("Select * from Visits order by Id DESC");
+
+    var grid = new WebGrid(source: data,
+                            rowsPerPage: 20);
+}
+@section SubMenu{
+    <table class="submenu">
+        <tr>
+            <td>
+                <a href="~/Components/Control/Account">Настройки</a>
+            </td>
+            <td class="active">
+                <a href="~/Components/Control/Visits">Посещения</a>
+            </td>
+        </tr>
+    </table>
+} 
+
+@grid.GetHtml(
+                tableStyle: "Grid",
+                headerStyle: "b-grid-head",
+        //alternatingRowStyle: "alt",
+                footerStyle: "b-grid-pgr",
+                columns: grid.Columns(
+
+
+                    grid.Column("Ip", "Ip", style: "grid-GB"),
+                    grid.Column("Login", "Время входа"),
+                    grid.Column("Browser", "Браузер")
+
+                )
+            )

@@ -1,21 +1,3 @@
 ﻿@{
-    Page.Title = "Панель управления"; 
-
-    var db = Database.Open("Datebase");
-    var tipson = db.QuerySingle("SELECT ControlTips FROM Settings WHERE Id = @0", 1);
-    
-}
-@if(tipson.ControlTips == "on"){
-<div class="home-start">
-    <h2 class="home-start-header">Начало работы:</h2>
-    <div class="home-start-steps home-start-step1">
-        1
-    </div>
-    <div class="home-start-steps home-start-step2">
-        2
-    </div>
-    <div class="home-start-steps home-start-step3">
-        3
-    </div>
-</div>
+    Response.Redirect("~/Components/Control/Site");
 }

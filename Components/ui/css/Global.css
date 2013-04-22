@@ -3,284 +3,103 @@
     
     */
 
-@font-face {  font-family: "Segoe WPC Light";  src: url("../fonts/8e701731-eaaf-4789-aae5-b96a30a536e1-2.eot");  src: url("../fonts/8e701731-eaaf-4789-aae5-b96a30a536e1-2.eot?") format("embedded-opentype"),       url("../fonts/8e701731-eaaf-4789-aae5-b96a30a536e1-3.woff") format("woff"),       url("../fonts/8e701731-eaaf-4789-aae5-b96a30a536e1-1.ttf") format("truetype"),       url("../fonts/8e701731-eaaf-4789-aae5-b96a30a536e1-4.svg#web") format("svg");  font-style: normal;  font-weight: normal;}
-
-
 body {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-family: Futura, Verdana, Helvetica, Arial, sans-serif;
     font-size: 13px;
     margin: 0;
     background-color: #fff;
 }
 
-a{
+a {
     text-decoration: none;
     border-bottom: 1px solid;
     color: #0055CC;
 }
-a:link{color:#0055CC;}
-a:hover{color:#CC0000;}
-a:focus{outline:none;}
 
-.text-left{text-align: left;}
-.text-right{text-align: right;}
-.text-center{text-align: center;}
+    a:link {
+        color: #0055CC;
+    }
 
-h1,h2,h3,h4,h5,h6 {
-  margin: 5px 0;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
+    a:hover {
+        color: #CC0000;
+    }
+
+    a:focus {
+        outline: none;
+    }
+
+.text-left {
+    text-align: left;
 }
 
-h1 small,h2 small,h3 small,h4 small,h5 small,h6 small {
-  font-weight: normal;
-  line-height: 1;
-  color: #999999;
+.text-right {
+    text-align: right;
 }
 
-h1 {font-size: 38.5px;}
-h2 {font-size: 31.5px;}
-h3 {font-size: 24.5px;}
-h4 {font-size: 17.5px;}
-h5 {font-size: 14px;}
-h6 {font-size: 11.9px;}
-
-h1 small {font-size: 24.5px;}
-h2 small {font-size: 17.5px;}
-h3 small {font-size: 14px;}
-h4 small {font-size: 14px;}
-
-/* Forms */
-input,
-button,
-select,
-textarea {
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 20px;
+.text-center {
+    text-align: center;
 }
 
-input,
-button,
-select,
-textarea {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    margin: 5px 0;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 20px;
+    color: inherit;
+    text-rendering: optimizelegibility;
 }
 
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  display: inline-block;
-  height: 20px;
-  padding: 4px 6px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #555555;
-  vertical-align: middle;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+    h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+        font-weight: normal;
+        line-height: 1;
+        color: #999999;
+    }
+
+h1 {
+    font-size: 38.5px;
 }
 
-input,
-textarea {
-  width: 206px;
+h2 {
+    font-size: 31.5px;
 }
 
-textarea {
-  height: auto;
+h3 {
+    font-size: 24.5px;
 }
 
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] {
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
-     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
-          transition: border linear 0.2s, box-shadow linear 0.2s;
+h4 {
+    font-size: 17.5px;
 }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus {
-  border-color: rgba(82, 168, 236, 0.8);
-  outline: 0;
-  outline: thin dotted \9;
-  /* IE6-9 */
-
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+h5 {
+    font-size: 14px;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 4px 0 0;
-  margin-top: 1px \9;
-  *margin-top: 0;
-  line-height: normal;
+h6 {
+    font-size: 11.9px;
 }
 
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
-  width: auto;
+h1 small {
+    font-size: 24.5px;
 }
 
-select,
-input[type="file"] {
-  height: 30px;
-  /* In IE7, the height of the select element cannot be changed by height, only font-size */
-
-  *margin-top: 4px;
-  /* For IE7, add top margin to align select with labels */
-
-  line-height: 30px;
+h2 small {
+    font-size: 17.5px;
 }
 
-select {
-  width: 220px;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+h3 small {
+    font-size: 14px;
 }
 
-select[multiple],
-select[size] {
-  height: auto;
+h4 small {
+    font-size: 14px;
 }
 
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-.form-horizontal input,
-.form-horizontal select{
-  display: inline-block;
-  *display: inline;
-  margin-bottom: 0;
-  vertical-align: middle;
-  *zoom: 1;
-}
-
-.form-horizontal .hide {
-  display: none;
-}
-
-.control-group {
-  margin-bottom: 10px;
-}
-
-legend + .control-group {
-  margin-top: 20px;
-  -webkit-margin-top-collapse: separate;
-}
-
-.form-horizontal .control-group {
-  margin-bottom: 20px;
-  *zoom: 1;
-}
-
-.form-horizontal .control-group:before,
-.form-horizontal .control-group:after {
-  display: table;
-  line-height: 0;
-  content: "";
-}
-
-.form-horizontal .control-group:after {
-  clear: both;
-}
-
-.form-horizontal .control-label {
-  float: left;
-  width: 160px;
-  padding-top: 5px;
-  text-align: right;
-}
-
-.form-horizontal .controls {
-  *display: inline-block;
-  *padding-left: 20px;
-  margin-left: 180px;
-  *margin-left: 0;
-}
-
-.form-horizontal .controls:first-child {
-  *padding-left: 180px;
-}
-
-.form-horizontal .help-block {
-  margin-bottom: 0;
-}
-
-.form-horizontal input + .help-block,
-.form-horizontal select + .help-block,
-.form-horizontal textarea + .help-block,
-.form-horizontal .uneditable-input + .help-block,
-.form-horizontal .input-prepend + .help-block,
-.form-horizontal .input-append + .help-block {
-  margin-top: 10px;
-}
 
 
 /* Font-familes varriates */
 
-.f-segoe{
+.f-segoe {
     font-family: 'Segoe UI', sans-serif;
     font-weight: 300;
 }

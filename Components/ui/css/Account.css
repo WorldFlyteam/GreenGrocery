@@ -5,11 +5,13 @@ body {
     margin: 0;
     color: #000;
     background:#fff;
+    text-align:center;
 }
 
 .b-page {
     max-width: 600px;
     text-align: center;
+    margin:0 auto;
 }
 
 .b-page-header {

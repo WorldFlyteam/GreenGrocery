@@ -1,0 +1,248 @@
+﻿@{
+    Page.Title = "Настройки";
+
+    var db = Database.Open("Datebase");
+
+    var dmetavalue = "";
+    var dstatvalue = "";
+    var djslibvalue = "";
+    var djqueryvalue = "";
+    var errorm = "";
+
+
+    var data = db.QuerySingle("SELECT * FROM Settings WHERE Id = @0", 1);
+
+    //Определение значений для input[type="checkbox"]
+    if (data.SiteMeta == "on")
+    {
+        dmetavalue = " checked=\"checked\" ";
+    }
+    else
+    {
+        dmetavalue = "";
+    }
+
+    if (data.SiteStat == "on")
+    {
+        dstatvalue = " checked=\"checked\" ";
+    }
+    else
+    {
+        dstatvalue = "";
+    }
+
+    if (data.JSLib == "on")
+    {
+        djslibvalue = " checked=\"checked\" ";
+    }
+    else
+    {
+        djslibvalue = "";
+    }
+
+    if (data.jQuery == "on")
+    {
+        djqueryvalue = " checked=\"checked\" ";
+    }
+    else
+    {
+        djqueryvalue = "";
+    }
+
+    if (IsPost)
+    {
+        AntiForgery.Validate();
+        var sitename = Request["sitename"];
+        if (sitename == null)
+        {
+
+        }
+        var sitelang = Request["sitelang"];
+        if (sitelang == null)
+        {
+
+        }
+        var pagesepr = Request["pagesepr"];
+        if (pagesepr == null)
+        {
+
+        }
+
+        var sitekeyw = Request["keywords"];
+
+        var sitemeta = Request["sitemeta"];
+        /*if(sitemeta == null){
+            sitemeta = "false";
+        }
+        sitemeta = "true";*/
+
+        var sitestat = Request["sitestat"];
+
+        var sitestatcode = Request.Unvalidated("sitestatcode");
+
+        var jslib = Request["jslib"];
+
+        var jquery = Request["jquery"];
+
+        try
+        {
+            db.Execute("UPDATE Settings SET SiteName=@0, SiteLang=@1, PageNameSep=@2, SiteMeta=@3, SiteKeywords=@4, SiteStat=@5, SiteStatCode=@6, jslib=@7, jQuery=@8 WHERE Id=@9", sitename, sitelang, pagesepr, sitemeta, sitekeyw, sitestat, sitestatcode, jslib, jquery, 1);
+
+            Response.Redirect("~/Components/Control/Site");
+        }
+        catch (Exception ex)
+        {
+            errorm = ex.Message.ToString();
+        }
+
+    }
+    
+    
+}
+
+
+@section SubMenu{
+    <table class="submenu">
+        <tr>
+            <td class="active">
+                <a href="~/Components/Control/Site">Общее</a>
+            </td>
+            <td>
+                <a href="~/Components/Control/Editor">Файлы</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<span class="123"></span>
+
+@errorm
+<form action="@Request.Url" method="post">
+    @AntiForgery.GetHtml()
+    <h2>Визуальное отображение</h2>
+    <div class="b-form-item b-form-item-sitename">
+        <label for="sitename">Название сайта</label>
+        <input id="sitename" class="input" type="text" name="sitename" value="@data.SiteName"/>
+        <div class="error"></div>
+    </div>
+    <div class="b-form-item b-form-item-sitelang">
+        <label for="sitelang">Язык сайта</label>
+        <input id="sitelang" class="input" type="text" name="sitelang" value="@data.SiteLang"/>
+
+    </div>
+    <div class="b-form-item b-form-item-pagenamesep">
+        <label for="pagesepr">Разделитель названия страницы</label>
+        @*<select name="pagesepr">
+            <option @if (data.PageNameSep == "-"){<text>selected</text>} value="-"> - </option>
+            <option @if (data.PageNameSep == "/"){<text>selected</text>} value="/"> / </option>
+            <option @if (data.PageNameSep == "\\"){<text>selected</text>} value="\"> \ </option>
+            <option @if (data.PageNameSep == "|"){<text>selected</text>} value="|"> | </option>
+            <option @if (data.PageNameSep == " "){<text>selected</text>} value=" ">нет</option>
+        </select>*@
+        <input id="pagesepr" class="input" type="text" name="pagesepr" value="@data.PageNameSep"/>
+        <div class="error"></div>
+    </div>
+
+    <h2>Код</h2>
+    <div class="b-form-item b-form-item-sitemeta">
+        <label for="sitemeta">
+            <input class="meta" id="sitemeta" type="checkbox" @Html.Raw(dmetavalue) name="sitemeta"/>
+            Мета данные</label>
+
+        <div class="description"></div>
+        <div class="error"></div>
+    </div>
+
+    <div class="b-form-item b-form-item-keywords">
+        <label for="keywords">Ключевые слова сайта:</label>
+        <input id="keywords" class="input" type="text"  name="keywords" value="@data.SiteKeywords"/>
+        <div class="error"></div>
+    </div>
+
+    <div class="b-form-item b-form-item-jquery">
+        <label for="jquery">
+            <input class="meta" id="jquery" type="checkbox" @Html.Raw(djqueryvalue) name="jquery"/>
+            Последняя версия jQuery</label>
+
+        @if (data.jQuery == "on")
+        {
+            <div class="description">После отключения сайт может работать некорректно</div>
+        }
+        <div class="error"></div>
+    </div>
+    <div class="b-form-item b-form-item-jslib">
+        <label for="jslib">
+            <input class="meta" id="jslib" type="checkbox" @Html.Raw(djslibvalue) name="jslib"/>
+            Общая JavaScript библиотека</label>
+
+        @if (data.JSLib == "on")
+        {
+            <div class="description">После отключения сайт может работать некорректно</div>
+        }
+        <div class="error"></div>
+    </div>
+
+    <div class="b-form-item b-form-item-stat">
+        <label for="sitestat">
+            <input id="sitestat" class="stat" type="checkbox" @Html.Raw(dstatvalue) name="sitestat"/>
+            Отправка общей статистики</label>
+
+
+        <div class="description">Это помогает развитию проекта</div>
+        <div class="error"></div>
+    </div>
+    <div class="b-form-item b-form-item-sitestat">
+        <label for="sitestatcode">Код вашей статистики:</label>
+        <textarea class="textarea-set" id="sitestatcode" name="sitestatcode">@data.SiteStatCode</textarea>
+        <div class="error"></div>
+    </div>
+    <div class="b-form-button">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+
+
+
+</form>
+<script>
+    //Определение значений чекбоксов и скрытие полей на основе этих данных
+    $(function ($) {
+        
+        var checkbox = {
+            sitemeta: document.getElementById("sitemeta"),
+            jquery: document.getElementById("jquery"),
+            jslib: document.getElementById("jslib")
+        };
+
+        //Sitemeta
+        if (checkbox.sitemeta.checked == false) {
+            $(".b-form-item-keywords").hide();
+        }
+
+        checkbox.sitemeta.onchange = function () {
+            if (checkbox.sitemeta.checked == true) {
+                $(".b-form-item-keywords").show()
+            } else {
+                $(".b-form-item-keywords").hide();
+            }
+        };
+
+        //jQuery
+        checkbox.jquery.onchange = function () {
+            if (checkbox.jquery.checked == true) {
+                $(".b-form-item-jquery .description").show()
+            } else {
+                $(".b-form-item-jquery .description").hide();
+            }
+        };
+
+        //jslib
+        checkbox.jslib.onchange = function () {
+            if (checkbox.jslib.checked == true) {
+                $(".b-form-item-jslib .description").show()
+            } else {
+                $(".b-form-item-jslib .description").hide();
+            }
+        };
+    })
+</script>

@@ -1,191 +1,190 @@
 ﻿@{
-Page.Title = "Новая страница";        
+    Page.Title = "Новая страница";
 
-var errMSG = "";
-var IsValid = true;
-var pagenameerror = "";
-var pageurlerror = "";
-var pagelayouterror = "";
-var pagecontenterror = "";
-var pagename = Request["pagename"];
-var pageurl = Request["pageurl"];
-var pagedescr = Request["pagedescr"];
-var pageauthor = Request["pageauthor"];
-var pagelayout = Request["pagelayout"];
-var pagecontent = Request.Unvalidated("pagecontent");
+    var errorm = "";
+    var IsValid = true;
 
-var db = Database.Open("Datebase");
+    var pagename = Request["pagename"];
+    var pageurl = Request["pageurl"];
+    var pagedescr = Request["pagedescr"];
+    var pageauthor = Request["pageauthor"];
+    var pagelayout = Request["pagelayout"];
+    var pagecontent = Request.Unvalidated("pagecontent");
+
+    var db = Database.Open("Datebase");
 
 
     DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/Components/Layouts"));
-    FileInfo[] fileInfo = dirInfo.GetFiles("_*.cshtml", SearchOption.TopDirectoryOnly  );
+    FileInfo[] fileInfo = dirInfo.GetFiles("_*.cshtml", SearchOption.TopDirectoryOnly);
 
-    if(IsPost){
+    if (IsPost)
+    {
+        AntiForgery.Validate();
+
         pagename = Request["pagename"];
-        if(pagename.IsEmpty()){
-            pagenameerror = "Заполните название страницы";
+        if (pagename.IsEmpty())
+        {
+
             IsValid = false;
         }
-        
+
         pageurl = Request["pageurl"];
-        if(pageurl.IsEmpty()){
-            pageurlerror = "У страницы должен быть адрес";
+        if (pageurl.IsEmpty())
+        {
+
             IsValid = false;
         }
 
         pagedescr = Request["pagedescr"];
-        
+
 
         pageauthor = Request["pageauthor"];
-        
+
 
         pagelayout = Request["pagelayout"];
-        if(pagelayout.IsEmpty()){
-            pagelayouterror = "Выбирете макет страницы";
+        if (pagelayout.IsEmpty())
+        {
+
             IsValid = false;
         }
 
         pagecontent = Request.Unvalidated("pagecontent");
-        if(pagecontent.IsEmpty()){
-            pagecontenterror = "Заполните содержимое страницы";
+        if (pagecontent.IsEmpty())
+        {
+
             IsValid = false;
         }
 
         var today = DateTime.Now;
-        if(IsValid){
-        try
-             {
-                 db.Execute("INSERT into Pages (Name, Content, Date, Url, Layout, Description, Author, Submitted) values (@0, @1, @2, @3, @4, @5, @6, @7)", pagename, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthor, today);
-                
-                 Response.Redirect("~/Components/Control/PageEdit?id=" + db.GetLastInsertId());
-             }
-             catch (Exception ex)
-             {
+        if (IsValid)
+        {
+            try
+            {
+                db.Execute("INSERT into Pages (Name, Content, Date, Url, Layout, Description, Author, Submitted) values (@0, @1, @2, @3, @4, @5, @6, @7)", pagename, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthor, today);
 
-                 errMSG = ex.Message.ToString();
-             }
+                Response.Redirect("~/Components/Control/PageEdit?id=" + db.GetLastInsertId());
+            }
+            catch (Exception ex)
+            {
 
-    }
+                errorm = ex.Message.ToString();
+            }
+
+        } else{
+                errorm += "Есть ошибки в заполнении формы. Попробуйте снова.";
+        }
     }
 }
 
+@if (!errorm.IsEmpty() || IsValid != true){
+    <script>
+        $(function ($) {
+            $.jGrowl('Произошла ошибка');
+            $.jGrowl('@errorm');
+        })
+    </script>
+}
 
-@errMSG
-<form action="@Request.Url" method="post">
-    <table>
-        <tbody>
-            <tr>
-                <td class="table-label">
-                    <label for="pagename">Название страницы*:</label>
-                </td>
-                <td>
-                    <input required type="text" class="input" id="pagename" name="pagename" value="@pagename"/>
-                    @pagenameerror
-                </td>
-            </tr>
+@section SubMenu{
+    <table class="submenu">
         <tr>
-                <td class="table-label">
-                    <label for="pageurl">Адрес страницы*:</label>
-                </td>
-                <td>
-                    <span class="form-input-link"><span class="t-link">
-            @Request.Url.Scheme://@Request.Url.Authority/</span><input required type="text" id="pageurl" class="input url" name="pageurl" value="@pageurl"/></span>
-            @pageurlerror
-                </td>
-            </tr>
-        <tr>
-                <td class="table-label">
-                    <label for="pagedescr">Описание страницы:</label>
-                </td>
-                <td>
-                    <input type="text"  class="input" id="pagedescr" name="pagedescr" value="@pagedescr"/>
-                </td>
-            </tr>
-        <tr>
-                <td class="table-label">
-                    <label for="pageauthor">Автор страницы:</label>
-                </td>
-                <td>
-                    <input type="text" class="input" id="pageauthor" name="pageauthor" value="@pageauthor"/>
-                </td>
-            </tr>
-        <tr>
-                <td class="table-label">
-                    <label for="pagelayout">Макет сраницы*:</label>
-                </td>
-                <td>
-                    <select required id="pagelayout" name="pagelayout">
-                @foreach (var f in fileInfo)
-               {
-                <option value="@Functions.CleanRCNames(f.Name)" >@Functions.CleanRCNames(f.Name)</option>
-               }
-            </select>
-            @pagelayouterror
-                </td>
-            </tr>
-        </tbody>
-    
+            <td>
+                <a href="~/Components/Control/AllPages">Все</a>
+            </td>
+            <td class="active">
+                <a href="~/Components/Control/NewPage">Новая</a>
+            </td>
+        </tr>
     </table>
-    <label class="table-label" for="pagecontent">Содежимое страницы*:</label>
-    @pagecontenterror
-            <textarea name="pagecontent" style="width:80%;height: 400px;min-width: 400px;">@pagecontent</textarea>
-     <input type="submit" class="btn" value="Сохранить"/>
-    @*
-    <ol>
-        <li>
-            <label for="pagename">Название страницы*:</label>
-            <input type="text" name="pagename" value="@pagename"/>
-            @pagenameerror
-        </li>
-        <li>
-            <label for="pageurl">Адрес страницы*:</label>
-         
-            <span class="form-input-link"><span class="t-link">
-            @Request.Url.Scheme://@Request.Url.Authority/</span><input type="text" class="url" name="pageurl" value="@pageurl"/></span>
-            @pageurlerror
-        </li>
-        <li>
-            <label for="c">Описание страницы:</label>
-            <input type="text" name="pagedescr" value="@pagedescr"/>
-        </li>
-        <li>
-            <label for="pageauthor">Автор страницы:</label>
-            <input type="text" name="pageauthor" value="@pageauthor"/>
-        </li>
-        <li>
-            <label for="pagelayout">Макет сраницы*:</label>
-            <select  name="pagelayout">
-                @foreach (var f in fileInfo)
-               {
+}
+
+<noscript>@errorm</noscript>
+
+<form id="c-form-pages-new" action="@Request.Url" method="post">
+    @AntiForgery.GetHtml()
+
+    <div class="b-form-item required">
+        <label for="pagename">Название страницы:</label>
+        <input id="pagename" class="input" type="text" name="pagename" value="@pagename"/>
+        <span style="display: none;" class="error error-name"></span>
+    </div>
+    <div class="b-form-item required">
+        <label for="pageurl">Адрес страницы:</label>
+        <input id="pageurl" class="input" type="text" name="pageurl" value="@pageurl"/>
+        <span style="display: none;" class="error error-uri"></span>
+    </div>
+    <div class="b-form-item">
+        <label for="pagedescr">Описание страницы:</label>
+        <input id="pagedescr" class="input" type="text" name="pagedescr" value="@pagedescr"/>
+
+    </div>
+    <div class="b-form-item required">
+        <label for="pageauthor">Автор страницы:</label>
+        <input id="pageauthor" class="input" type="text" name="pageauthor" value="@pageauthor"/>
+
+    </div>
+    <div class="b-form-item required">
+        <label for="pagename">Макет сраницы:</label>
+        <select id="pagelayout" name="pagelayout">
+            @foreach (var f in fileInfo)
+            {
                 <option value="@Functions.CleanRCNames(f.Name)" >@Functions.CleanRCNames(f.Name)</option>
-               }
-            </select>
-            @pagelayouterror
-        </li>
-        <li>
-            <label for="pagecontent">Содежимое страницы*:</label>
-            @pagecontenterror
-            <textarea name="pagecontent" style="width:80%;height: 400px;min-width: 400px;">@pagecontent</textarea>
-        </li>
-        <li>
-            <input type="submit" class="btn" value="Сохранить"/>
-        </li>
-    </ol>*@
-</form>
+            }
+        </select>
+
+    </div>
+    <div class="b-form-item required">
+        <label for="pagecontent">Содержимое страницы:</label>
+        <textarea id="pagecontent" name="pagecontent" style="width: 80%; min-width: 580px;">@pagecontent</textarea>
+    </div>
+    <div class="b-form-button">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+    <script src="~/Components/CKEditor/ckeditor.js"></script>
+    <script src="~/Components/CKEditor/styles.js"></script>
+
+    <link href="~/Components/CKEditor/skins/moono/editor.css" rel="stylesheet" />
+    <link href="~/Components/CKEditor/skins/moono/dialog.css" rel="stylesheet" />
+    <script src="~/Components/ui/js/Control/CKEditor-loader.js"></script>
 
 
-<script type="text/javascript" src="~/Components/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript">
-tinyMCE.init({
-    mode : "textareas",
-    theme : "advanced",
-    theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink,code,image,fontsizeselect",
-    theme_advanced_buttons2 : "",
-    theme_advanced_buttons3 : "",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_statusbar_location : "bottom",
-    plugins : 'inlinepopups',
-    
-});
-</script>
+
+    <script>
+        //Валидация полей формы
+        var errortext = "Поле обязательно для заполнения";
+        var IsValid = false;
+        $(function ($) {
+            $('#pagename').blur(function () {
+                var value = $(this).val();
+                if (value == "") {
+                    $(".error-name").show().text(errortext);
+                    IsValidper = false;
+                } else {
+                    $(".error-name").hide();
+                    IsValidper = true;
+                }
+            });
+
+            $('#pageurl').blur(function () {
+                var value = $(this).val();
+                if (value == "") {
+                    $(".error-uri").show().text(errortext);
+                    IsValidper = false;
+                } else {
+                    $(".error-uri").hide();
+                    IsValidper = true;
+                }
+            });
+
+            var form = document.getElementById("c-form-pages-new");
+
+
+            form.onsubmit = function () {
+                if (!IsValid) {
+                    $.jGrowl('Заполните все необходимые поля формы');
+                    return false;
+                }
+            };
+        })
+    </script>

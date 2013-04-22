@@ -1,14 +1,15 @@
 ﻿@{
-    Page.Title = "Все страницы сайта";    
-    var hashcode = Request.GetHashCode();  
+    Page.Title = "Все страницы сайта";
+    var hashcode = Request.GetHashCode();
     var db = Database.Open("Datebase");
 
     var deletepage = Request["DeletePage"];
-    if(deletepage == "true"){
-        
+    if (deletepage == "true")
+    {
+
         var deleteitemid = Request["ItemId"];
-        
-        
+
+
         db.Execute("delete from Pages where Id=@0", deleteitemid);
         Response.Redirect("AllPages");
     }
@@ -21,15 +22,29 @@
     var grid = new WebGrid(source: data,
                             rowsPerPage: 20);
 }
-<p>Все доступные страницы</p>
-        @grid.GetHtml(
+@section SubMenu{
+    <table class="submenu">
+        <tr>
+            <td class="active">
+                <a href="~/Components/Control/AllPages">Все</a>
+            </td>
+            <td>
+                <a href="~/Components/Control/NewPage">Новая</a>
+            </td>
+        </tr>
+    </table>
+}
+
+
+<h2>Все страницы</h2>
+@grid.GetHtml(
                 tableStyle: "Grid",
                 headerStyle: "b-grid-head",
-                //alternatingRowStyle: "alt",
+        //alternatingRowStyle: "alt",
                 footerStyle: "b-grid-pgr",
                 columns: grid.Columns(
                     grid.Column(format: @<a href="PageEdit?id=@item.Id"  class="grid-ctrl-ico grid-con" title="Редактирование страницы" >✏</a>),
-                    
+
                     grid.Column("Name", "Название страницы", style: "grid-GB"),
                     grid.Column("Adress", "Адрес страницы", format: @<a href="/@item.Url" target="_blank"><i>/@item.Url</i></a>),
                     grid.Column("LastEdit", "Последнее изменение", format: @<i>@item.Date</i>),
@@ -40,4 +55,10 @@
 
 
 
-<script>function pgdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "AllPages.cshtml?DeletePage=true&ItemId=" + id + "&hash=" + @hashcode;}return false;}</script>
+<script>function pgdel(t,id){
+    confirm('Вы уверены, что хотите удалить?');
+    if(t == @hashcode){
+        window.location = "AllPages.cshtml?DeletePage=true&ItemId=" + id + "&hash=" + @hashcode;
+    }
+return false;
+}</script>

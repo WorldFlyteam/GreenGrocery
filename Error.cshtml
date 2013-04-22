@@ -1,15 +1,18 @@
 ﻿@{
     var error = UrlData[0].AsInt();
 
-    if(error == 403){
+    if (error == 403)
+    {
         Page.Title = "404 Not Found";
         Page.Description = "Вы не имеете доступа к указанному ресурсу";
     }
-    if(error == 404){
+    if (error == 404)
+    {
         Page.Title = "404 Not Found";
         Page.Description = "Запрошеная страница не найдена";
     }
-    if(error == 500){
+    if (error == 500)
+    {
         Page.Title = "404 Not Found";
         Page.Description = "Мы столкнулись с критической ошибкой.";
     }
@@ -24,7 +27,7 @@
     <title>@Page.Title</title>
     <style>
         body {
-            font-family: Verdana, sans-serif;
+            font-family: Futura, Verdana, sans-serif;
         }
 
         .page {

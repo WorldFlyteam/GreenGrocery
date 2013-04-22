@@ -1,0 +1,160 @@
+﻿@{
+    Page.Title = "Меню сайта";
+    var IsValid = true;
+    var errorm = "";
+    var itemid = Request["id"];
+    if (itemid == null || itemid.IsEmpty())
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+    }
+
+
+    var linklabel = Request["linklabel"];
+    var pagelink = Request["pagelink"];
+    var linkorder = Request["linkorder"];
+    var hashcode = Request.GetHashCode();
+
+    var db = Database.Open("Datebase");
+    var data = db.QuerySingle("select * from SiteMenu where Id = @0", itemid);
+    var dataforgrid = db.Query("select * from SiteMenu order by OrderId DESC");
+    var grid = new WebGrid(dataforgrid);
+
+
+    if (IsPost)
+    {
+        AntiForgery.Validate();
+        linklabel = Request["linklabel"];
+        if (linklabel.IsEmpty())
+        {
+
+            IsValid = false;
+        }
+
+        pagelink = Request["pagelink"];
+        if (pagelink.IsEmpty())
+        {
+
+            IsValid = false;
+        }
+
+
+        var target = Request["Target"];
+
+        linkorder = Request["linkorder"];
+        if (linkorder.IsEmpty())
+        {
+            linkorder = "1";
+        }
+
+        if (IsValid)
+        {
+            try
+            {
+                //db.Execute("INSERT INTO SiteMenu (Label, Link, Target, OrderId) VALUES (@0, @1, @2, @3)", linklabel, pagelink, target, linkorder);
+                db.Execute("UPDATE SiteMenu SET Label = @0, Link = @1, Target = @2, OrderId = @3 WHERE Id = @4", linklabel, pagelink, target, linkorder, itemid);
+                Response.Redirect("~/Components/Control/Menu");
+            }
+            catch (Exception ex)
+            {
+                errorm = ex.Message.ToString();
+            }
+        }
+    }
+}
+
+@errorm
+<a href="Menu#add">
+    <h2 class="add-onedit" id="add">Добавление пункта меню</h2>
+</a>
+<h2 id="edit">Редактирование пунктов меню</h2>
+<form id="c-form-menu-edit" action="@Request.Url" name="edit" method="post">
+    @AntiForgery.GetHtml()
+    <div class="b-form-item required">
+        <label for="linklabel">Название пункта меню:</label>
+        <input id="linklabel" class="input" type="text" name="linklabel" value="@data.Label"/>
+        <span style="display: none;" class="error error-label"></span>
+    </div>
+    <div class="b-form-item required">
+        <label for="pagelink">Адрес ссылки:</label>
+        <input id="pagelink" class="input" type="text" name="pagelink"  value="@data.Link" maxlength="250"/>
+        <span style="display: none;" class="error error-uri"></span>
+    </div>
+    <div class="b-form-item">
+        <label for="Target">Target:</label>
+        <select id="Target" name="Target">
+            <option @if (data.Target == "_self")
+                    {<text>selected</text>} value="_self">Тоже окно</option>
+            <option  @if (data.Target == "_blank")
+                     {<text>selected</text>} value="_blank">Новое окно</option>
+        </select>
+    </div>
+    <div class="b-form-item">
+        <label for="linkorder">Номер пункта меню:</label>
+        <input id="linkorder" class="input" type="text" name="linkorder" value="@data.OrderId"/>
+
+    </div>
+    <div class="b-form-button">
+        <input type="submit" value="Добавить" />
+    </div>
+
+</form>
+
+
+<h2 id="avalible">Доступные пункты меню</h2>
+@grid.GetHtml(tableStyle: "Grid",
+                headerStyle: "grid-head",
+        //alternatingRowStyle: "grid-alt", 
+                columns: grid.Columns(
+                grid.Column(format: @<a href="MenuEdit?id=@item.Id"  class="grid-ctrl-ico grid-con" title="Редактирование" >✏</a>),
+                    grid.Column("Label", "Имя пункта", style: "grid-GB"),
+                    grid.Column("Link", "Ссылка", format: @<i>@item.Link</i>),
+                    grid.Column("Order", "Номер", format: @<span class="grid-GB"><a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=1&id=@item.Id" class="grid-ctrl-ico grid-con" title="Повысить">↑</a>
+                        <a href="SiteMenuChangeOrderId.cshtml?tn=rc_simplemenu&cv=-1&id=@item.Id" class="grid-ctrl-ico grid-con" title="Понизить">↓</a>@item.OrderId</span>),
+                    grid.Column("Target", "Target"),
+                    grid.Column(format: @<a onclick="itemdel(@hashcode, @item.Id)" class="grid-ctrl-ico grid-del" title="Удаление">☓</a>)
+                                    )
+                            )
+
+
+<script>
+    //Валидация полей формы
+    var errortext = "Поле обязательно для заполнения";
+    var IsValid = false;
+    
+    $(function ($) {
+        $('#linklabel').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-label").show().text(errortext);
+                IsValidper = false;
+            } else {
+                $(".error-label").hide();
+                IsValidper = true;
+            }
+        });
+
+        $('#pagelink').blur(function () {
+            var value = $(this).val();
+            if (value == "") {
+                $(".error-uri").show().text(errortext);
+                IsValidper = false;
+            } else {
+                $(".error-uri").hide();
+                IsValidper = true;
+            }
+        });
+
+        var form = document.getElementById("c-form-menu-edit");
+        
+
+        form.onsubmit = function () {
+            if (!IsValid) {
+                $.jGrowl('Заполните все поля формы');
+                return false;
+            }
+        };
+    })
+</script>
+
+
+<script>function itemdel(t,id){confirm('Вы уверены, что хотите удалить?');if(t == @hashcode){window.location = "SiteMenu.cshtml?DeleteMenuItem=true&ItemId=" + id + "&hash=" + @hashcode;}return false;}</script>

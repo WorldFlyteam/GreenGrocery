@@ -5,158 +5,77 @@
     aCookie.Expires = DateTime.Now.AddMonths(3);
     Response.Cookies.Add(aCookie);
 
+    var menulink = new string[9] { "/components/control/site", "/components/control/editor", "/components/control/allpages", "/components/control/pageedit", "/components/control/newpage", "/components/control/menu", "/components/control/menuedit", "/components/control/account", "/components/control/visits" };  // Array with the page address
 
-    var menulink = new string[7] {"/Components/Control/Default", "/Components/Control/AllPages", "/Components/Control/NewPage", "/Components/Control/SiteMenu", "/Components/Control/Editor", "/Components/Control/Settings", "/Components/Control/UserSettings"};  // Array with the page address
+
 }
-
 <!DOCTYPE html>
+<html>
+    <head>
+        <title>@Page.Title - Панель управления</title>
+         
+            <link href="~/Components/ui/css/Control/Style.css" media="all" rel="stylesheet" />
+            <link href="~/Components/ui/css/grid-control.css" rel="stylesheet" />
+            <link href="~/Components/jGrowl/jquery.jgrowl.css" rel="stylesheet" />
 
-<html lang="ru">
-<head>
-    <meta charset="utf-8" />
-    <title>@Page.Title - Ceres Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link href="~/Components/ui/css/Global.css" rel="stylesheet"/>-->
-    <link href="~/Components/ui/css/control/cp.css" rel="stylesheet" />
-    <link href="~/Components/ui/css/grid-control.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Components/ui/css/passfield.min.css" />
-    <!--[if gte IE 9]><style>.i-header-name-text{filter: none;}</style><![endif]-->
-    <script src="//code.jquery.com/jquery-1.9.0.min.js"></script>
-    @RenderSection("Head", false)
-</head>
-<body>
-    <div class="b-page">
-        <div class="b-header">
-            <div class="b-header-logo">
-                <div class="b-header-logo-app">
-                    <a class="i-header-logo-app-link" href="~/">Ceres Project</a>
+
+            <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+            <script src="~/Components/jGrowl/jquery.jgrowl.js"></script>
+
+
+        @RenderSection("head", required: false)
+    </head>
+    <body>
+        
+        <div class="b-layout">
+            <div class="b-header">
+                
+                    <a class="logo" href="~/Components/Control/Default" title="На главную"></a>
+                
+                <div class="b-header-account">
+                    Пользователь: @WebSecurity.CurrentUserName | <a href="~/Account/Logout">Выход</a>
                 </div>
-                <div class="b-header-logo-site">
-                    <a class="i-header-logo-site-link" href="~/">Ваш сайт</a>
+
+                <div class="b-header-menu">
+                    <a @if(Request.Url.LocalPath == menulink[0] || Request.Url.LocalPath == menulink[1]){
+                           <text>class="active"</text>
+                    }
+                         href="/Components/Control/Site">Сайт</a>
+                    <a @if (Request.Url.LocalPath == menulink[2] || Request.Url.LocalPath == menulink[3] || Request.Url.LocalPath == menulink[4])
+                       {
+                           <text>class="active"</text>
+                    }
+                         href="/Components/Control/AllPages">Страницы</a>
+                    
+                    <a @if(Request.Url.LocalPath == menulink[5] || Request.Url.LocalPath == menulink[6]){
+                           <text>class="active"</text>
+                    }
+                         href="/Components/Control/Menu">Меню</a>
+                    <a @if (Request.Url.LocalPath == menulink[7] || Request.Url.LocalPath == menulink[8])
+                       {
+                           <text>class="active"</text>
+                    }
+                          href="/Components/Control/Account">Аккаунт</a>
                 </div>
             </div>
-            <div class="b-header-user">
-                Пользователь: @WebSecurity.CurrentUserName | <a href="~/Account/Logout">Выйти</a>
-            </div>
-            <div class="b-header-name">
-                <h1 class="i-header-name-text">
-                    @Page.Title
-                </h1>
-            </div>
-        </div>
-        <div class="b-content">
-            <div class="b-main">
+            <div class="b-content">
+                @RenderSection("SubMenu", false)
+                
+
                 @RenderBody()
             </div>
-        </div>
-        <div class="b-nav">
-            <ul class="b-nav-menu">
-                <li class="b-nav-menu-item i-nav-menu-home">
-                    <a class="i-nav-menu-home-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[0])
-                                                                   {<text>selected</text>}" href="~/Components/Control/Default">Главная страница</a>
-                </li>
-                <li class="b-nav-menu-item i-nav-menu-pages">
-                    <a class="i-nav-menu-pages-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[1])
-                                                                    {<text>selected</text>}" href="~/Components/Control/AllPages">Все страницы</a>
-                </li>
-                <li class="b-nav-menu-item i-nav-menu-newpage">
-                    <a class="i-nav-menu-newpage-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[2])
-                                                                      {<text>selected</text>}" href="~/Components/Control/NewPage">Новая страница</a>
-                </li>
-                <li class="b-nav-menu-item i-nav-menu-nav">
-                    <a class="i-nav-menu-nav-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[3])
-                                                                  {<text>selected</text>}" href="~/Components/Control/SiteMenu">Меню сайта</a>
-                </li>
-                <li class="b-nav-menu-item i-nav-menu-editor">
-                    <a class="i-nav-menu-editor-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[4])
-                                                                     {<text>selected</text>}" href="~/Components/Control/Editor">Редактор файлов</a>
-                </li>
-                <li class="b-nav-menu-item i-nav-menu-settings">
-                    <a class="i-nav-menu-settings-link i-nav-menu-link @if (Request.Url.LocalPath == menulink[5] || Request.Url.LocalPath == menulink[6])
-                                                                       {<text>selected</text>}" href="~/Components/Control/Settings">Настройки</a>
-                </li>
-                
-            </ul>
-            <div style="height: 400px;"></div>
-        </div>
-
-    </div>
-    <div class="b-bottom">
-        <div class="b-bottom-logo">
-        </div>
-        <div class="b-bottom-copy">
-
-            @DateTime.Now.Year © World Fly development team
-        </div>
-    </div>
-    @*
-
-<div class="Page">
-    <div class="header">
-        <div class="branding">
-            <div class="app">
-                <a href="~/">Ceres Project</a>
-            </div>
-            <div class="site">
-                <a href="~/">Ваш сайт</a>
-                
+            <div class="b-footer">
+                <div class="b-footer-section">
+                    <img src="" alt="Greengrocery Project" />
+                </div>
+                <div class="b-footer-section">
+                    2
+                </div>
+                <div class="b-footer-section">
+                    <img src="" alt="World Fly" />
+                </div>
             </div>
         </div>
-        <div class="login">Пользователь: @WebSecurity.CurrentUserName | <a href="~/Account/Logout">Выйти</a></div>
-        <h1 class="page-title">
-            @Page.Title
-        </h1>
         
-    </div>
-    <div class="content">
-        <div class="main">
-            @RenderBody()
-        </div>
-    </div>
-    <div class="menu">
-        <ul class="menu-admin">
-            <li class="section-home">
-                <h3><a class="navicon-home @if(Request.Url.LocalPath == menulink[0]){<text>selected</text>}" href="~/Components/Control/Default">Главная страница</a></h3>
-            </li>
-            <li class="section-pages">
-                <h3><a class="navicon-pages  @if(Request.Url.LocalPath == menulink[1]){<text>selected</text>}" href="~/Components/Control/AllPages">Все страницы</a></h3>
-            </li>
-            <li class="section-newpage">
-                <h3><a class="navicon-newpage @if(Request.Url.LocalPath == menulink[2]){<text>selected</text>}" href="~/Components/Control/NewPage">Новая страница</a></h3>
-            </li>
-            
-            <li class="section-navigation">
-                <h3><a class="navicon-navigation @if(Request.Url.LocalPath == menulink[3]){<text>selected</text>}" href="~/Components/Control/SiteMenu">Меню сайта</a></h3>
-            </li>
-            <li class="section-editor">
-                <h3><a class="navicon-editor @if(Request.Url.LocalPath == menulink[4]){<text>selected</text>}" href="~/Components/Control/Editor">Редактор файлов</a></h3>
-            </li>
-            <li class="section-settings">
-                <h3><a class="navicon-settings @if(Request.Url.LocalPath == menulink[5]){<text>selected</text>}" href="~/Components/Control/Settings">Настройки</a></h3>
-            </li>
-            <li class="section-settings">
-                <h3><a class="navicon-settings @if(Request.Url.LocalPath == menulink[6]){<text>selected</text>}" href="~/Components/Control/UserSettings">Настройки аккаунта</a></h3>
-            </li>
-        </ul>
-        <div style="height: 400px;"></div>
-
-    </div>
-
-</div>
-<div class="bottom">
-    <div class="bottom-logo">
-        <!--<object data="~/components/ui/svg/ceres.svg" type="image/svg+xml" class="svg-blogo"></object>
-        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHdpZHRoPSIxMzQiIGhlaWdodD0iODQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPCEtLSBDcmVhdGVkIHdpdGggU1ZHLWVkaXQgLSBodHRwOi8vc3ZnLWVkaXQuZ29vZ2xlY29kZS5jb20vIC0tPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDx0ZXh0IHhtbDpzcGFjZT0icHJlc2VydmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJTYW5zLXNlcmlmIiBmb250LXNpemU9Ijc2IiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZT0iIzAwMDAwMCIgZmlsbD0iI2ZmZmZmZiIgaWQ9InN2Z18xIiB5PSI2OCIgeD0iMjgiPiYjMTY5OzwvdGV4dD4KICA8dGV4dCB4bWw6c3BhY2U9InByZXNlcnZlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iU2Fucy1zZXJpZiIgZm9udC1zaXplPSIzOSIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2U9IiMwMDAwMDAiIGZpbGw9IiNmZmZmZmYiIGlkPSJzdmdfMiIgeT0iNTIiIHg9Ijk2Ij5lcmVzPC90ZXh0PgogPC9nPgo8L3N2Zz4="/>-->
-    </div>
-    <div class="copyright">
-        @DateTime.Now.Year © World Fly development team
-    </div>
-    
-</div>*@
-
-    <script src="~/Components/ui/js/passfield.min.js"></script>
-    <script src="~/Components/ui/js/control/admin.js"></script>
-    <script>new Image().src = "//counter.yadro.ru/hit?r" + escape(document.referrer) + ((typeof (screen) == "undefined") ? "" : ";s" + screen.width + "*" + screen.height + "*" + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth)) + ";u" + escape(document.URL) + ";h" + escape(document.title.substring(0, 80)) + ";" + Math.random();</script>
-
-</body>
+    </body>
 </html>

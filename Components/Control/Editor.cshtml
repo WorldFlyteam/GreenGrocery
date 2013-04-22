@@ -37,7 +37,7 @@
             try
             {
                 System.IO.File.WriteAllText(fileToEdit, fileContent);
-                errMSG = "File updated";
+                errMSG = "Файл обновлён";
             }
             catch (Exception ex)
             {
@@ -55,12 +55,20 @@
   
     
 }
+@if(!errMSG.IsEmpty()){ 
+<script>
+    $(function ($) {
+        $.jGrowl('@errMSG');
+    })
+</script>
+} 
 @section Head{
     <link href="~/Components/CodeMirror/codemirror.css" rel="stylesheet" />
     <link href="~/Components/CodeMirror/theme/eclipse.css" rel="stylesheet" />
     <script src="~/Components/CodeMirror/codemirror.js"></script>
 
-    @if(Request["mode"] == "html"){
+    @if (Request["mode"] == "html")
+    {
         
         <script src="~/Components/CodeMirror/mode/xml/xml.js"></script>
          
@@ -78,41 +86,53 @@
         .CodeMirror {
             background: #fff !important;
             border: 1px solid #efefef !important;
-            max-width:900px;
+            max-width: 900px;
         }
     </style>
 }
+@section SubMenu{
+    <table class="submenu">
+        <tr>
+            <td>
+                <a href="~/Components/Control/Site">Общее</a>
+            </td>
+            <td class="active">
+                <a href="~/Components/Control/Editor">Файлы</a>
+            </td>
+        </tr>
+    </table>
+}
 
-<h2>Не изменяйте файлы, если не знаете что делаете</h2>
+<h4>Не изменяйте файлы, если не знаете что делаете</h4>
 
 <form name="selectLayout" id="selectLayout" method="get" action="">
 
 
     @errMSG
-    <dl>
+    <dl data-step="1" data-intro="Выберете файл для редактирования">
         <dt>Макеты</dt>
-            @foreach (var f in fileInfo)
-            {
-                <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/")+ @f.Name + "&pMasterPage=" + @pMasterPage + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
-                </dd>
-            }
+        @foreach (var f in fileInfo)
+        {
+            <dd>
+                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/") + @f.Name + "&pMasterPage=" + @pMasterPage + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
+            </dd>
+        }
         <dt>Стили</dt>
-            @foreach (var fs in fileInfostyle)
-            {
-                <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&mode=css")">@fs.Name</a>
-                </dd>
-            }
+        @foreach (var fs in fileInfostyle)
+        {
+            <dd>
+                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&mode=css")">@fs.Name</a>
+            </dd>
+        }
         <dt>Пользовательские скрипты</dt>
-            @foreach (var fj in fileInfoscript)
-            {
-                <dd>
-                    <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&mode=js")">@fj.Name</a>
-                </dd>
-            }
+        @foreach (var fj in fileInfoscript)
+        {
+            <dd>
+                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&mode=js")">@fj.Name</a>
+            </dd>
+        }
     </dl>
-                
+
 
 </form>
 
@@ -146,36 +166,36 @@
 
 @if (Request["mode"] == "html")
 {
-        <script>
-            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                mode: { name: "xml", alignCDATA: true },
-                lineNumbers: true
-            });
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: { name: "xml", alignCDATA: true },
+            lineNumbers: true
+        });
     </script>
 }
-    @if (Request["mode"] == "css")
-    {
-        <script>
-            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                lineNumbers: true,
-                mode: "text/css",
-                indentUnit: 4,
-                indentWithTabs: true,
-                enterMode: "keep",
-                tabMode: "shift"
-            });
+@if (Request["mode"] == "css")
+{
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            mode: "text/css",
+            indentUnit: 4,
+            indentWithTabs: true,
+            enterMode: "keep",
+            tabMode: "shift"
+        });
     </script>
-    }
-    @if (Request["mode"] == "js")
-    {
-        <script>
-            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                lineNumbers: true,
-                mode: "text/javascript",
-                indentUnit: 4,
-                indentWithTabs: true,
-                enterMode: "keep",
-                tabMode: "shift"
-            });
+}
+@if (Request["mode"] == "js")
+{
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            mode: "text/javascript",
+            indentUnit: 4,
+            indentWithTabs: true,
+            enterMode: "keep",
+            tabMode: "shift"
+        });
     </script>
-    }
+}
