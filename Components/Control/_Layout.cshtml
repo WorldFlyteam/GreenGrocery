@@ -11,71 +11,82 @@
 }
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>@Page.Title - Панель управления</title>
-         
-            <link href="~/Components/ui/css/Control/Style.css" media="all" rel="stylesheet" />
-            <link href="~/Components/ui/css/grid-control.css" rel="stylesheet" />
-            <link href="~/Components/jGrowl/jquery.jgrowl.css" rel="stylesheet" />
+<head>
+    <title>@Page.Title - Панель управления</title>
+
+    <link href="~/Components/ui/css/Control/Style.css" media="all" rel="stylesheet" />
+    <link href="~/Components/ui/css/grid-control.css" rel="stylesheet" />
+    <link href="~/Components/jGrowl/jquery.jgrowl.css" rel="stylesheet" />
 
 
-            <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-            <script src="~/Components/jGrowl/jquery.jgrowl.js"></script>
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="~/Components/jGrowl/jquery.jgrowl.js"></script>
 
 
-        @RenderSection("head", required: false)
-    </head>
-    <body>
-        
-        <div class="b-layout">
-            <div class="b-header">
-                
-                    <a class="logo" href="~/Components/Control/Default" title="На главную"></a>
-                
-                <div class="b-header-account">
-                   <a href="~/">Ваш сайт</a> | Пользователь: @WebSecurity.CurrentUserName | <a href="~/Account/Logout">Выход</a>
-                </div>
+    @RenderSection("head", required: false)
+</head>
+<body>
 
-                <div class="b-header-menu">
-                    <a @if(Request.Url.LocalPath == menulink[0] || Request.Url.LocalPath == menulink[1]){
+    <div class="b-layout">
+        <div class="b-header">
+
+            <a class="logo" href="~/Components/Control/Default" title="На главную"></a>
+
+            <div class="b-header-account">
+                <a href="~/">Ваш сайт</a>
+                <wbr>
+                | Пользователь: @WebSecurity.CurrentUserName | <a href="~/Account/Logout">Выход</a>
+            </div>
+
+            <div class="b-header-menu">
+                <a @if (Request.Url.LocalPath == menulink[0] || Request.Url.LocalPath == menulink[1])
+                   {
                            <text>class="active"</text>
-                    }
+                   }
                          href="/Components/Control/Site">Сайт</a>
-                    <a @if (Request.Url.LocalPath == menulink[2] || Request.Url.LocalPath == menulink[3] || Request.Url.LocalPath == menulink[4])
-                       {
+                <a @if (Request.Url.LocalPath == menulink[2] || Request.Url.LocalPath == menulink[3] || Request.Url.LocalPath == menulink[4])
+                   {
                            <text>class="active"</text>
-                    }
+                   }
                          href="/Components/Control/AllPages">Страницы</a>
-                    
-                    <a @if(Request.Url.LocalPath == menulink[5] || Request.Url.LocalPath == menulink[6]){
-                           <text>class="active"</text>
-                    }
-                         href="/Components/Control/Menu">Меню</a>
-                    <a @if (Request.Url.LocalPath == menulink[7] || Request.Url.LocalPath == menulink[8])
-                       {
-                           <text>class="active"</text>
-                    }
-                          href="/Components/Control/Account">Аккаунт</a>
-                </div>
-            </div>
-            <div class="b-content">
-                @RenderSection("SubMenu", false)
-                
 
-                @RenderBody()
+                <a @if (Request.Url.LocalPath == menulink[5] || Request.Url.LocalPath == menulink[6])
+                   {
+                           <text>class="active"</text>
+                   }
+                         href="/Components/Control/Menu">Меню</a>
+                <a @if (Request.Url.LocalPath == menulink[7] || Request.Url.LocalPath == menulink[8])
+                   {
+                           <text>class="active"</text>
+                   }
+                          href="/Components/Control/Account">Аккаунт</a>
             </div>
+        </div>
+        <div class="b-content">
+            @RenderSection("SubMenu", false)
+
+
+
+
+
+            @RenderBody()
+        </div>
+
+        <div class="b-bottom">
             <div class="b-footer">
-                <div class="b-footer-section">
-                    <img src="" alt="Greengrocery Project" />
+                <div class="b-footer-section b-footer-section-left">
+                    <a href="//www.greengrocery.pw" target="_blank">GreenGrocery Project</a>
                 </div>
-                <div class="b-footer-section">
-                    2
+                <div class="b-footer-section b-footer-section-center">
+
                 </div>
-                <div class="b-footer-section">
-                    <img src="" alt="World Fly" />
+                <div class="b-footer-section b-footer-section-right">
+                    © <a href="http://www.worldfly.org">World Fly</a>
                 </div>
             </div>
         </div>
         
-    </body>
+    </div>
+
+</body>
 </html>

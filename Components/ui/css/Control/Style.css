@@ -3,7 +3,7 @@
     text-align: center;
     font-size: 0.8rem;
     background: #fff;
-    color: #000;
+    color: #000000;
 }
 
 a {
@@ -11,7 +11,7 @@ a {
 }
 
     a:hover {
-        color: #000;
+        color: #000000;
     }
 
 h1,
@@ -20,13 +20,12 @@ h3,
 h4,
 h5 {
     font-weight: normal;
-   
 }
+
 h2 {
     font-size: 24px;
     color: #ff7d00;
 }
-
 
 .b-header {
     text-align: center;
@@ -37,23 +36,18 @@ h2 {
 
     .b-header .logo {
         margin: 10px auto;
-        background: url(/Components/ui/images/control/fetus-cp-logo.png) no-repeat;
+        background: url(/Components/ui/images/control/gg-cp-logo.png) no-repeat;
         display: block;
         width: 308px;
         height: 170px;
     }
 
-    @media (-webkit-min-device-pixel-ratio:2),
-       (min--moz-device-pixel-ratio:2),
-       (-o-min-device-pixel-ratio:2/1),
-       (min-resolution:2dppx) {
-       .b-header .logo {
-            
-            background: url(/Components/ui/images/control/fetus-cp-logo@2.png) no-repeat 50%;
-            background-size: 308px;
-        }
-       }
-
+@media (-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-resolution: 2dppx) {
+    .b-header .logo {
+        background: url(/Components/ui/images/control/gg-cp-logo@2.png) no-repeat 50%;
+        background-size: 308px;
+    }
+}
 
 .b-header-account {
     position: absolute;
@@ -65,7 +59,7 @@ h2 {
 .b-header-menu {
     text-align: left;
     font-size: 30px;
-    font-family: Verdana,sans-serif;
+    font-family: Verdana, sans-serif;
     padding-top: 15px;
     overflow: hidden;
 }
@@ -74,7 +68,7 @@ h2 {
         margin-right: 24px;
         display: block;
         float: left;
-        color: #FF7400;
+        color: #ff7d00;
     }
 
         .b-header-menu a:hover {
@@ -86,8 +80,6 @@ h2 {
             color: #000;
         }
 
-
-
 .b-layout {
     margin: 0 auto;
     width: 1200px;
@@ -97,18 +89,16 @@ h2 {
 
 
 
-
-
-
 @media (max-width: 1300px) {
-    .b-layout {
+    .b-layout,
+    {
         width: 1130px;
     }
 }
 
-
 @media (max-width: 1200px) {
-    .b-layout {
+    .b-layout,
+    {
         width: 1030px;
     }
 
@@ -122,7 +112,8 @@ h2 {
 }
 
 @media (max-width: 1100px) {
-    .b-layout {
+    .b-layout,
+    {
         width: 950px;
     }
 
@@ -131,80 +122,111 @@ h2 {
     }
 }
 
-
-.submenu {
+.submenu tr td {
+    text-align: center;
+    white-space: nowrap;
+    line-height: 19px;
 }
 
-    .submenu tr td {
-        text-align: center;
-        white-space: nowrap;
-        line-height: 19px;
+    .submenu tr td.active a {
+        color: #000;
+        text-decoration: none;
     }
 
-        .submenu tr td.active a {
-            color: #000;
-            text-decoration: none;
-        }
-
-        .submenu tr td a {
-            display: block;
-            padding: 0px 15px;
-            padding-top: 7px;
-            padding-bottom: 0px;
-            height: 28px;
-            font-size: 16px;
-            background: #efefef;
-            -webkit-border-top-left-radius: 10px;
-            -webkit-border-top-right-radius: 10px;
-            -moz-border-radius-topleft: 10px;
-            -moz-border-radius-topright: 10px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
+    .submenu tr td a {
+        display: block;
+        padding: 0px 15px;
+        padding-top: 7px;
+        padding-bottom: 0px;
+        height: 28px;
+        font-size: 16px;
+        background: #efefef;
+        -webkit-border-top-left-radius: 10px;
+        -webkit-border-top-right-radius: 10px;
+        -moz-border-radius-topleft: 10px;
+        -moz-border-radius-topright: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
 
 .b-form-item {
     margin-bottom: 20px;
 }
-.b-form-item label {
-    display: block;
-    font-weight:bold;
-    font-family:Arial, sans-serif;
-}
 
-.b-form-item input[type="text"],
-.b-form-item input[type="password"],
-.b-form-item input[type="email"] {
-    height:22px;
-    width: 80%;
-    min-width: 580px;
-    font-size:14px;
-    text-indent:5px;
-    display:block;
-    font-family:Arial, sans-serif;
-}
+    .b-form-item label {
+        display: block;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+    }
 
-.b-form-item textarea {
-    width: 80%;
-    height:175px;
-    min-width: 580px;
-    font-size: 14px;
-    text-indent: 5px;
-    display: block;
-    font-family:Arial, sans-serif;
+    .b-form-item input[type="text"],
+    .b-form-item input[type="password"],
+    .b-form-item input[type="email"] {
+        height: 22px;
+        width: 80%;
+        min-width: 580px;
+        font-size: 14px;
+        text-indent: 5px;
+        display: block;
+        font-family: Arial, sans-serif;
+    }
+
+    .b-form-item textarea {
+        width: 80%;
+        height: 175px;
+        min-width: 580px;
+        font-size: 14px;
+        text-indent: 5px;
+        display: block;
+        font-family: Arial, sans-serif;
+    }
+
+
+
+/*  Bottom  */
+
+.b-bottom {
+    width: 100%;
+    padding: 0;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
 }
 
 .b-footer {
-    border-top: 1px solid rgb(229,229,229);
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding:0 15px 0 15px;
+    font-size: 100%;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 33px;
+    margin: 20px auto;
+    border: 0;
+    min-width: 950px;
+    max-width: 1200px;
+    border-top: 1px solid #e5e5e5;
+    padding: 8px 0 0 0;
 }
 
 .b-footer-section {
-    float: left;
-    
+    top: 0;
+    position: absolute;
 }
+
+.b-footer-section-left {
+    left: 0;
+    text-align: left;
+    padding-left: .8em;
+}
+
+.b-footer-section-right {
+    text-align: right;
+    right: 0;
+    top: 0;
+    padding-right: .8em;
+}
+
+
 
 .error {
     color: #f00;
