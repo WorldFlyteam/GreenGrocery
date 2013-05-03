@@ -141,6 +141,8 @@
     <div class="b-form-item required">
         <label for="pagecontent">Содержимое страницы:</label>
         <textarea id="pagecontent" name="pagecontent" style="width: 80%; min-width: 580px;">@data.Content</textarea>
+
+
     </div>
     <div class="b-form-button">
         <input type="submit" value="Сохранить" />
@@ -161,6 +163,13 @@
 <link href="~/Components/CKEditor/skins/moono/dialog.css" rel="stylesheet" />
 <script src="~/Components/ui/js/Control/CKEditor-loader.js"></script>
 
+<!--<script>
+    var insertmenu = document.getElementsByClassName("c-editor-insertmenu");
+    insertmenu.on = function () {
+        CKEDITOR.instances.pagecontent.insertHtml('<p>This is a new paragraph.</p>');
+        return false;
+    }
+</script>-->
 
 <script>
     //Валидация полей формы

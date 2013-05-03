@@ -32,7 +32,7 @@
     if (IsPost)
     {
         AntiForgery.Validate();
-        if (!fileContent.IsEmpty() && !fileToEdit.IsEmpty())
+        if (!fileContent.IsEmpty() && !fileToEdit.IsEmpty() && fileToEdit.Contains("Components/ui"))
         {
             try
             {
@@ -43,6 +43,10 @@
             {
                 errMSG = ex.ToString();
             }
+        }
+        else
+        {   
+    <script>$(function ($) { $.jGrowl('Ошибка доступа'); })</script>
         }
     }
     else
@@ -55,13 +59,14 @@
   
     
 }
-@if(!errMSG.IsEmpty()){ 
-<script>
-    $(function ($) {
-        $.jGrowl('@errMSG');
+@if (!errMSG.IsEmpty())
+{ 
+    <script>
+        $(function ($) {
+            $.jGrowl('@errMSG');
     })
-</script>
-} 
+    </script>
+}
 @section Head{
     <link href="~/Components/CodeMirror/codemirror.css" rel="stylesheet" />
     <link href="~/Components/CodeMirror/theme/eclipse.css" rel="stylesheet" />
@@ -109,7 +114,7 @@
 
 
     @errMSG
-    <dl data-step="1" data-intro="Выберете файл для редактирования">
+    <dl>
         <dt>Макеты</dt>
         @foreach (var f in fileInfo)
         {
@@ -136,12 +141,16 @@
 
 </form>
 
+@if(!fileToEdit.IsEmpty() || fileToEdit != null){
 
 <form name="fileEdit" id="fileEdit" method="post" action="">
     @AntiForgery.GetHtml()
 
 
     <textarea id="code" class="i-form-editor" name="fileContent">@fileContent</textarea>
+
+    
+
     <p class="form-actions">
         <input type="submit" class="btn" value="Update" title="Update" />
     </p>
@@ -161,9 +170,12 @@
 
         }
 
+        
     </script>
 </form>
-
+    
+    
+}
 @if (Request["mode"] == "html")
 {
     <script>
