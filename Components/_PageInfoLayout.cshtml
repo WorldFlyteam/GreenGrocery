@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Page.Title</title>
+        <link href="~/Components/ui/css/Global.css" rel="stylesheet" />
+        <style>
+            .b-info-tablecontainer {
+                margin: 10px 10px 20px 10px;
+                width: 90%;
+                text-align:center;
+                margin:0 auto;
+            }
+            .b-info-table {
+                
+                text-align:left;
+                width:100%;
+                border: 1px solid #eee;
+                border-collapse: collapse;
+                *border-collapse: collapse;
+                border-left: 0;
+            }
+                .b-info-table td {
+                    padding: 2px;
+                    padding: 5px;
+                    border: 1px dashed #eee;
+                    border-left: 1px solid #eee;
+                }
+        </style>
+    </head>
+    <body>
+        <div class="b-info-tablecontainer">
+            <table class="b-info-table">
+            <tr>
+                <td>Id</td>
+                <td>@Page.Id</td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td>@Page.Title</td>
+            </tr>
+            <tr>
+                <td>Created</td>
+                <td>@Page.Submitted</td>
+            </tr>
+            <tr>
+                <td>Last Edit</td>
+                <td>@Page.Date</td>
+            </tr>
+            <tr>
+                <td>Author</td>
+                <td>@Page.Author</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>@Page.Description</td>
+            </tr>
+            <tr>
+                <td>Layout</td>
+                <td>@Page.Layout</td>
+            </tr>
+        </table>
+        </div>
+        
+        <div class="b-info-body">@RenderBody()</div>
+        
+    </body>
+</html>
