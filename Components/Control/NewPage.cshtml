@@ -153,16 +153,16 @@
     <script>
         //Валидация полей формы
         var errortext = "Поле обязательно для заполнения";
-        var IsValid = false;
+        var IsValid = true;
         $(function ($) {
             $('#pagename').blur(function () {
                 var value = $(this).val();
                 if (value == "") {
                     $(".error-name").show().text(errortext);
-                    IsValidper = false;
+                    IsValid = false;
                 } else {
                     $(".error-name").hide();
-                    IsValidper = true;
+                    IsValid = true;
                 }
             });
 
@@ -170,16 +170,14 @@
                 var value = $(this).val();
                 if (value == "") {
                     $(".error-uri").show().text(errortext);
-                    IsValidper = false;
+                    IsValid = false;
                 } else {
                     $(".error-uri").hide();
-                    IsValidper = true;
+                    IsValid = true;
                 }
             });
 
             var form = document.getElementById("c-form-pages-new");
-
-
             form.onsubmit = function () {
                 if (!IsValid) {
                     $.jGrowl('Заполните все необходимые поля формы');

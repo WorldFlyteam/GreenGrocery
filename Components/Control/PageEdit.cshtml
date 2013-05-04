@@ -163,28 +163,28 @@
 <link href="~/Components/CKEditor/skins/moono/dialog.css" rel="stylesheet" />
 <script src="~/Components/ui/js/Control/CKEditor-loader.js"></script>
 
-<!--<script>
+<script>
     var insertmenu = document.getElementsByClassName("c-editor-insertmenu");
     insertmenu.on = function () {
-        CKEDITOR.instances.pagecontent.insertHtml('<p>This is a new paragraph.</p>');
+        CKEDITOR.instances.pagecontent.insertHtml("<div>@@Site.SiteMenu()</div>");
         return false;
     }
-</script>-->
+</script>
 
 <script>
     //Валидация полей формы
     var errortext = "Поле обязательно для заполнения";
-    var IsValid = false;
+    var IsValid = true;
 
     $(function ($) {
         $('#pagetitle').blur(function () {
             var value = $(this).val();
             if (value == "") {
                 $(".error-title").show().text(errortext);
-                IsValidper = false;
+                IsValid = true;
             } else {
                 $(".error-title").hide();
-                IsValidper = true;
+                IsValid = false;
             }
         });
 
@@ -192,10 +192,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-uri").show().text(errortext);
-                IsValidper = false;
+                IsValid = true;
             } else {
                 $(".error-uri").hide();
-                IsValidper = true;
+                IsValid = false;
             }
         });
 
@@ -210,3 +210,4 @@
         };
     })
 </script>
+ 

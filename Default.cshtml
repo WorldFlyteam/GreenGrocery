@@ -14,15 +14,20 @@
         Response.SetStatus(HttpStatusCode.NotFound);
     }
 
+    //Варианты отображения страницы
     if (pageId0 == "manage"){
-        if (WebSecurity.IsAuthenticated){
-            if (pageId1 == "edit"){
-                <text>@Html.Raw(page.Content)</text> 
-            }
-        }else{
-            Response.Redirect("/Account/Login?ReturnUrl=" + Request.Url);
-        }
-        
+        //Редактирование страницы
+        /*if (pageId1 == "edit"){
+                //Запрос входа
+                    if (WebSecurity.IsAuthenticated){
+            
+                        <text>@Html.Raw(page.Content)</text> 
+                    
+                    }else{
+                        Response.Redirect("/Account/Login?ReturnUrl=" + Request.Url);
+                    }
+        }*/
+        //Отображение информации о странице
         if (pageId1 == "info"){
             Layout = "~/Components/_PageInfoLayout.cshtml";
             Page.Title = Page.Title = page.Name;
@@ -34,7 +39,7 @@
             Page.Id = page.Id;
             <text>@Html.Raw(page.Content)</text>
         }
-    }else{
+    }else{ //Если параметров не поступало отображаем стандартно
         <text>@Html.Raw(page.Content)</text>
         Page.Title = page.Name;
         Page.Description = page.Description;
@@ -43,7 +48,3 @@
     }
  
 }
-
-
-
-

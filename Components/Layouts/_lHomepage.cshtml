@@ -6,24 +6,20 @@
 }
 @section head_code{
     @RenderSection("head_code", false)
-    <style>
-        .b-logo {
-            height: 200px;
-            margin: auto;
-            background: url(/Components/ui/images/gg-logo-m.png) no-repeat 50%;
-        }
+        <style>
+            .b-logo {
+                height: 200px;
+                margin: auto;
+                background: url(/Components/ui/images/gg-logo-m.png) no-repeat 50%;
+            }
 
-        @@media (-webkit-min-device-pixel-ratio:2),
-       (min--moz-device-pixel-ratio:2),
-       (-o-min-device-pixel-ratio:2/1),
-       (min-resolution:2dppx) {
-       .b-logo {
-            
-            background: url(/Components/ui/images/gg-logo-m@X2.png) no-repeat 50%;
-            background-size: 281px;
-        }
-       }
-    </style>
+            @@media (-webkit-min-device-pixel-ratio:2), (min--moz-device-pixel-ratio:2), (-o-min-device-pixel-ratio:2/1), (min-resolution:2dppx) {
+                .b-logo {
+                    background: url(/Components/ui/images/gg-logo-m@X2.png) no-repeat 50%;
+                    background-size: 281px;
+                }
+            }
+        </style>
 }
 
 <div class="b-logo"></div>
