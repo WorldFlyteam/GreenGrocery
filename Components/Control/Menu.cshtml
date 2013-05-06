@@ -22,7 +22,7 @@
         db.Execute("delete from SiteMenu where Id=@0", deleteitemid);
 
 
-        Response.Redirect("SiteMenu");
+        Response.Redirect("Menu");
     }
 
 
@@ -65,7 +65,7 @@
             try
             {
                 db.Execute("INSERT INTO SiteMenu (Label, Link, Target, OrderId) VALUES (@0, @1, @2, @3)", linklabel, pagelink, target, linkorder);
-                Response.Redirect("~/Components/Control/SiteMenu");
+                Response.Redirect("~/Components/Control/Menu");
             }
             catch (Exception ex)
             {
@@ -141,10 +141,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-label").show().text(errortext);
-                IsValidper = false;
+                IsValid = false;
             } else {
                 $(".error-label").hide();
-                IsValidper = true;
+                IsValid = true;
             }
         });
 
@@ -152,10 +152,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-uri").show().text(errortext);
-                IsValidper = false;
+                IsValid = false;
             } else {
                 $(".error-uri").hide();
-                IsValidper = true;
+                IsValid = true;
             }
         });
 
@@ -176,7 +176,7 @@
     function itemdel(t,id){
         confirm('Вы уверены, что хотите удалить?');
         if(t == @hashcode){
-            window.location = "SiteMenu.cshtml?DeleteMenuItem=true&ItemId=" + id + "&hash=" + @hashcode;
+            window.location = "Menu.cshtml?DeleteMenuItem=true&ItemId=" + id + "&hash=" + @hashcode;
         }
     return false;
     }

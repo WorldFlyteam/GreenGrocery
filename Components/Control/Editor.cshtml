@@ -119,21 +119,21 @@
         @foreach (var f in fileInfo)
         {
             <dd>
-                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/Layouts/") + @f.Name + "&pMasterPage=" + @pMasterPage + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
+                <a href="@Href("~/Components/Control/Editor?fileToEdit=" + @Server.MapPath("~/Components/Layouts/") + @f.Name + "&pMasterPage=" + @pMasterPage + "&mode=html")">@Functions.CleanRCNames(f.Name)</a>
             </dd>
         }
         <dt>Стили</dt>
         @foreach (var fs in fileInfostyle)
         {
             <dd>
-                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&mode=css")">@fs.Name</a>
+                <a href="@Href("~/Components/Control/Editor?fileToEdit=" + @Server.MapPath("~/Components/ui/css/") + @fs.Name + "&mode=css")">@fs.Name</a>
             </dd>
         }
         <dt>Пользовательские скрипты</dt>
         @foreach (var fj in fileInfoscript)
         {
             <dd>
-                <a href="@Href("~/Components/Control/Editor.cshtml?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&mode=js")">@fj.Name</a>
+                <a href="@Href("~/Components/Control/Editor?fileToEdit=" + @Server.MapPath("~/Components/ui/js/") + @fj.Name + "&mode=js")">@fj.Name</a>
             </dd>
         }
     </dl>

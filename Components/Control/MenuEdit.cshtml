@@ -52,12 +52,16 @@
             {
                 //db.Execute("INSERT INTO SiteMenu (Label, Link, Target, OrderId) VALUES (@0, @1, @2, @3)", linklabel, pagelink, target, linkorder);
                 db.Execute("UPDATE SiteMenu SET Label = @0, Link = @1, Target = @2, OrderId = @3 WHERE Id = @4", linklabel, pagelink, target, linkorder, itemid);
-                Response.Redirect("~/Components/Control/Menu");
+                <script>$(function ($) { $.jGrowl('Данные обновлены'); })</script>  
             }
             catch (Exception ex)
             {
                 errorm = ex.Message.ToString();
             }
+        }
+        else
+        {
+         <script>$(function ($) { $.jGrowl('Заполните все поля формы'); })</script>  
         }
     }
 }
@@ -94,7 +98,7 @@
 
     </div>
     <div class="b-form-button">
-        <input type="submit" value="Добавить" />
+        <input type="submit" value="Cохранить" />
     </div>
 
 </form>
@@ -119,17 +123,17 @@
 <script>
     //Валидация полей формы
     var errortext = "Поле обязательно для заполнения";
-    var IsValid = false;
+    var IsValid = true;
     
     $(function ($) {
         $('#linklabel').blur(function () {
             var value = $(this).val();
             if (value == "") {
                 $(".error-label").show().text(errortext);
-                IsValidper = false;
+                IsValid = false;
             } else {
                 $(".error-label").hide();
-                IsValidper = true;
+                IsValid = true;
             }
         });
 
@@ -137,10 +141,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-uri").show().text(errortext);
-                IsValidper = false;
+                IsValid = false;
             } else {
                 $(".error-uri").hide();
-                IsValidper = true;
+                IsValid = true;
             }
         });
 

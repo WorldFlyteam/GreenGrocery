@@ -76,12 +76,15 @@
             try
             {
                 db.Execute("UPDATE Pages SET Name=@0, Content=@1, Date=@2, Url=@3, Layout=@4, Description=@5, Author=@6 WHERE Id=@7 ", pagetitle, pagecontent, today, pageurl, pagelayout, pagedescr, pageauthtor, pageId);
-                Response.Redirect("~/Components/Control/PageEdit?id=" + pageId);
+                <script>$(function ($) { $.jGrowl('Данные обновлены'); })</script>  
             }
             catch (Exception ex)
             {
                 errorm = ex.Message.ToString();
             }
+        }else
+        {
+         <script>$(function ($) { $.jGrowl('Заполните все поля формы'); })</script>  
         }
     }
 
@@ -181,10 +184,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-title").show().text(errortext);
-                IsValid = true;
+                IsValid = false;
             } else {
                 $(".error-title").hide();
-                IsValid = false;
+                IsValid = true;
             }
         });
 
@@ -192,10 +195,10 @@
             var value = $(this).val();
             if (value == "") {
                 $(".error-uri").show().text(errortext);
-                IsValid = true;
+                IsValid = false;
             } else {
                 $(".error-uri").hide();
-                IsValid = false;
+                IsValid = true;
             }
         });
 
